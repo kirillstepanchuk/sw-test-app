@@ -1,5 +1,15 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+
+export const HeaderContainer = styled("div")`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const RightItems = styled("div")`
+  display: flex;
+  align-items: center;
+`;
 
 export const CategoryButton = styled.button`
 text-decoration: none;

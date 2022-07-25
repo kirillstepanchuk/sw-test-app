@@ -1,9 +1,15 @@
 import React, { Component } from "react";
 import gql from "graphql-tag";
+import { Link } from "react-router-dom";
 
-import { CategoryButton } from "./style";
 import { client } from "../../index";
 import Tabs from "../Tabs/Tabs";
+import MainContainer from "../MainContainer/MainContainer";
+import CurrencySwitcher from "../CurrencySwitcher/CurrencySwitcher";
+import CartOverlay from "../CartOverlay/CartOverlay";
+import Logo from "../../images/app_logo.png";
+import { ROUTE_PAGES } from "../../constants";
+import { HeaderContainer, RightItems } from "./style";
 
 const queryProd = (category) => gql`
   query {
@@ -25,16 +31,25 @@ export class Header extends Component {
 
   render() {
     return (
-      <div>
-        {/* <CategoryButton onClick={() => this.logData("all")}>all</CategoryButton>
+      <MainContainer>
+        <HeaderContainer>
+          {/* <CategoryButton onClick={() => this.logData("all")}>all</CategoryButton>
         <CategoryButton onClick={() => this.logData("clothes")}>
           clothes
         </CategoryButton>
         <CategoryButton onClick={() => this.logData("tech")}>
           tech
         </CategoryButton> */}
-        <Tabs />
-      </div>
+          <Tabs />
+          <Link to={ROUTE_PAGES.category}>
+            <img alt="Logo" src={Logo} />
+          </Link>
+          <RightItems>
+            <CurrencySwitcher />
+            <CartOverlay />
+          </RightItems>
+        </HeaderContainer>
+      </MainContainer>
     );
   }
 }

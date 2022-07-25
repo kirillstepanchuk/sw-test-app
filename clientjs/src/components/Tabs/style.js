@@ -7,6 +7,7 @@ background: none;
 text-transform: uppercase;
 text-align: center;
 color: ${props => props.active ? "#5ECE7B" : "#1D1F22"};
+border-bottom: ${props => props.active ? "2px solid #5ECE7B" : "none"};
 padding: 10px;
 font-size: 16px;
 height: 80px;

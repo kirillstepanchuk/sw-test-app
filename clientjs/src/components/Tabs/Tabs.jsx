@@ -10,9 +10,9 @@ export class Tabs extends Component {
     this.state = { activeTabIndex: 0 };
   }
 
-  onTabClick(index) {
+  async onTabClick(index) {
+    await this.setState({ activeTabIndex: index });
     console.log(this.state.activeTabIndex);
-    this.setState({ activeTabIndex: index });
   }
 
   render() {
