@@ -1,5 +1,15 @@
 import { QUERY_CART_INFO } from "./components/CartOverlay/CartOverlay";
-import { QUERY_PRODUCTS } from "./components/ProductList/ProductList";
+// import { QUERY_PRODUCTS } from "./components/ProductList/ProductList";
+import gql from "graphql-tag";
+
+
+export const QUERY_PRODUCTS = gql`
+  query {
+    availableItems @client {
+      id
+    }
+  }
+`;
 
 export const resolvers = {
   Mutation: {
@@ -13,12 +23,21 @@ export const resolvers = {
       cache.writeData({
         data: {
           cart: {
-            items: cart.item.concat(newItem),
+            items: cart.items.concat(newItem),
             total: cart.total + newItem.price,
             __typename: "Cart",
           }
         }
       })
+    },
+    addItemsToAviableItems: (_, args, { cache }) => {
+      const { availableItems } = cache.readQuery({ query: QUERY_PRODUCTS });
+
+      cache.writeData({
+        data: {
+          availableItems: args.items
+        }
+      });
     }
   }
 }

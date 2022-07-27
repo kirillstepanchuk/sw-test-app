@@ -2,11 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import ApolloClient, { InMemoryCache } from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
+import { createGlobalStyle } from 'styled-components'
 
 import App from './App';
 import { resolvers } from "./resolvers";
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
 
 export const client = new ApolloClient({
   uri: "http://localhost:4000/graphql",
@@ -25,9 +24,20 @@ export const client = new ApolloClient({
   }
 });
 
+const GlobalStyle = createGlobalStyle`
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+`;
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <ApolloProvider client={client}>
     <App />
+    <GlobalStyle />
   </ApolloProvider>
 );
 

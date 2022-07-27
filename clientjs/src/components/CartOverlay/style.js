@@ -4,7 +4,6 @@ export const CardButtonContainer = styled("div")`
   position: relative;
   width: 20px;
   height: 20px;
-  cursor: pointer;
 `;
 
 export const ImageContainer = styled("img")`
@@ -34,22 +33,25 @@ export const ModalBackground = styled("div")`
     /* z-index: 100; */
     display: ${({ show }) => (show ? 'block' : 'none')};
     position: fixed;
-    top: 0;
+    top: 79px;
     left: 0;
     height: 100vh;
     width:100vw;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.22);
 `;
 
 export const CartContent = styled("div")`
     /* z-index: 1; */
+  display: ${({ show }) => (show ? 'block' : 'none')};
 
   position: absolute;
-  top: 40px;
+  top: 49px;
   right: 0px;
 
   width: 325px;
   height: 400px;
+
+  padding: 40px 15px;
 
   background-color: #ffffff;
 `;

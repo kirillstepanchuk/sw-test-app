@@ -22,7 +22,6 @@ const queryProd = (category) => gql`
 export class Header extends Component {
   async logData(category) {
     const res = await client.query({ query: queryProd(category) });
-    console.log("res: ", res);
   }
 
   componentDidMount = async () => {
@@ -33,14 +32,7 @@ export class Header extends Component {
     return (
       <MainContainer>
         <HeaderContainer>
-          {/* <CategoryButton onClick={() => this.logData("all")}>all</CategoryButton>
-        <CategoryButton onClick={() => this.logData("clothes")}>
-          clothes
-        </CategoryButton>
-        <CategoryButton onClick={() => this.logData("tech")}>
-          tech
-        </CategoryButton> */}
-          <Tabs />
+          <Tabs onChangeName={this.props.changeName} />
           <Link to={ROUTE_PAGES.category}>
             <img alt="Logo" src={Logo} />
           </Link>

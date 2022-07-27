@@ -1,25 +1,33 @@
 import React, { Component } from "react";
-import gql from "graphql-tag";
 
-import { client } from "../../index";
-
-export const QUERY_PRODUCTS = gql`
-  query {
-    availableItems @client {
-      id
-    }
-  }
-`;
-
-export class ProductList extends Component {
-  componentDidMount = async () => {
-    const res = await client.query({ query: QUERY_PRODUCTS });
-    console.log("res: ", res);
-  };
-
+class ProductList extends Component {
   render() {
-    return <div>ProductList</div>;
+    return (
+      <div>
+        {this.props.data.map((product) => (
+          <div key={product.id}>{product.id}</div>
+        ))}
+      </div>
+    );
   }
 }
+
+// const ProductListFunc = () => {
+//   const [products, setProducts] = useState([]);
+//   const { data } = useQuery(QUERY_PRODUCTS);
+//   console.log("data: ", data);
+
+//   useEffect(() => {
+//     setProducts(data.availableItems);
+//   }, [data]);
+
+//   return (
+//     <div>
+//       {products.map((product) => (
+//         <div>{product.id}</div>
+//       ))}
+//     </div>
+//   );
+// };
 
 export default ProductList;
