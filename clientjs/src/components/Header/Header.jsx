@@ -11,21 +11,35 @@ import Logo from "../../images/app_logo.png";
 import { ROUTE_PAGES } from "../../constants";
 import { HeaderContainer, RightItems } from "./style";
 
-const queryProd = (category) => gql`
+export const QUERY_CART_INFO = gql`
   query {
-    category(input: { title: "${category}" }) {
-      name
+    cart @client {
+      items {
+        name
+      }
+      total
     }
+    currency @client
   }
 `;
 
 export class Header extends Component {
-  async logData(category) {
-    const res = await client.query({ query: queryProd(category) });
+  constructor() {
+    super();
+    this.state = {
+      cart: [],
+      total: 0,
+    };
   }
 
   componentDidMount = async () => {
-    await this.logData("all");
+    const { data } = await client.query({ query: QUERY_CART_INFO });
+    console.log("data: ", data);
+
+    this.setState({
+      cart: data.cart.items,
+      total: data.cart.total,
+    });
   };
 
   render() {
@@ -38,7 +52,7 @@ export class Header extends Component {
           </Link>
           <RightItems>
             <CurrencySwitcher />
-            <CartOverlay />
+            <CartOverlay cartItems={this.state.cart} total={this.state.total} />
           </RightItems>
         </HeaderContainer>
       </MainContainer>

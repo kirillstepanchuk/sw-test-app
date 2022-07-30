@@ -1,12 +1,29 @@
-import { QUERY_CART_INFO } from "./components/CartOverlay/CartOverlay";
+// import { QUERY_CART_INFO } from "./components/CartOverlay/CartOverlay";
 // import { QUERY_PRODUCTS } from "./components/ProductList/ProductList";
 import gql from "graphql-tag";
 
+export const QUERY_CART_INFO = gql`
+  query {
+    cart @client {
+      items {
+        name
+      }
+      total
+    }
+    currency @client
+  }
+`;
 
 export const QUERY_PRODUCTS = gql`
   query {
     availableItems @client {
       id
+      prices {
+        currency {
+          label
+        }
+        amount
+      }
     }
   }
 `;
@@ -20,11 +37,12 @@ export const resolvers = {
 
       const newItem = availableItems.find(item => item.id === args.id);
 
-      cache.writeData({
+      cache.writeQuery({
+        query: QUERY_CART_INFO,
         data: {
           cart: {
-            items: cart.items.concat(newItem),
-            total: cart.total + newItem.price,
+            items: cart.items.concat({ name: newItem.id, __typename: "CartItem" }),
+            total: cart.total + newItem.prices[0].amount,
             __typename: "Cart",
           }
         }
@@ -33,6 +51,7 @@ export const resolvers = {
     addItemsToAviableItems: (_, args, { cache }) => {
       const { availableItems } = cache.readQuery({ query: QUERY_PRODUCTS });
 
+      console.log('args.items: ', args.items);
       cache.writeData({
         data: {
           availableItems: args.items

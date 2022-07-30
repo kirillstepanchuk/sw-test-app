@@ -9,6 +9,12 @@ export const QUERY_PRODUCTS = gql`
   query {
     availableItems @client {
       id
+      prices {
+        currency {
+          label
+        }
+        amount
+      }
     }
   }
 `;

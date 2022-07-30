@@ -35,17 +35,34 @@ export class CartOverlay extends Component {
           total: 0,
         },
       },
-      loading: false,
       isOpen: false,
     };
   }
 
-  componentDidMount = async () => {
-    const { data, loading } = await client.query({ query: QUERY_CART_INFO });
+  componentDidMount = () => {
+    console.log("componentDidMount", this.state.data);
+
     this.setState({
-      data: data,
-      loading: loading,
+      data: {
+        cart: {
+          items: this.props.cartItems,
+        },
+      },
     });
+  };
+
+  componentDidUpdate = (prevProps, prevState) => {
+    console.log("componentDidUpdate", this.state.data);
+
+    if (prevProps.cartItems !== this.props.cartItems) {
+      this.setState({
+        data: {
+          cart: {
+            items: this.props.cartItems,
+          },
+        },
+      });
+    }
   };
 
   onBackgroundClick = () => {
@@ -54,7 +71,7 @@ export class CartOverlay extends Component {
     });
   };
 
-  onCartImageClick = () => {
+  onCartImageClick = async () => {
     this.setState((state) => ({
       isOpen: !state.isOpen,
     }));
@@ -81,9 +98,6 @@ export class CartOverlay extends Component {
             ) : (
               <div>there are no items in cart</div>
             )}
-            {/* {this.state.data.cart.items.length === 0 && (
-              <div>there are no items in cart</div>
-            )} */}
           </div>
           <div>
             Total {this.state.data.currency} {this.state.data.cart.total}

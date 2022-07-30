@@ -2,10 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import ApolloClient, { InMemoryCache } from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components';
+import { Provider } from 'react-redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { createStore } from 'redux';
 
 import App from './App';
 import { resolvers } from "./resolvers";
+import rootReducer from "./store/reducers/root";
 
 export const client = new ApolloClient({
   uri: "http://localhost:4000/graphql",
@@ -17,7 +21,7 @@ export const client = new ApolloClient({
         total: 0,
         __typename: "Cart",
       },
-      availableItems: [{ id: 1, price: 200, __typename: "item", }, { id: 2, price: 200, __typename: "item", }, { id: 3, price: 200, __typename: "item", }],
+      availableItems: [],
       currency: "USD",
     },
     resolvers: resolvers,
@@ -32,12 +36,16 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const store = createStore(rootReducer, composeWithDevTools());
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <ApolloProvider client={client}>
-    <App />
-    <GlobalStyle />
+    <Provider store={store}>
+      <GlobalStyle />
+      <App />
+    </Provider>
   </ApolloProvider>
 );
 
