@@ -41,12 +41,6 @@ const reducer = (
 
       return newRemoveState;
 
-    case "CURRENCY_SWITCH":
-      return {
-        ...state,
-        activeCurrency: action.payload,
-      };
-
     case CHECK_OUT_PRODUCTS_FROM_CART:
       return {
         ...state,

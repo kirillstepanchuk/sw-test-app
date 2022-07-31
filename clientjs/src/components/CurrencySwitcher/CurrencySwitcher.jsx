@@ -1,6 +1,8 @@
 import React, { Component, useState } from "react";
+import { connect } from "react-redux";
 
 import ArrowImage from "../../images/switcher_arrow.svg";
+import currencyActions from "../../store/actions/currency";
 import {
   DropDownContainer,
   DropDownHeader,
@@ -32,36 +34,57 @@ const options = [
   },
 ];
 
-export default function CurrencySwitcher() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(null);
+class CurrencySwitcher extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isOpen: false,
+      currencySymbol: null,
+    };
+  }
 
-  const toggling = () => setIsOpen(!isOpen);
+  toggling = () => this.setState({ isOpen: !this.state.isOpen });
 
-  const onOptionClicked = (value) => () => {
-    setSelectedOption(value);
-    setIsOpen(false);
-    console.log(selectedOption);
+  onOptionClick = (symbol, label) => () => {
+    this.setState({
+      currencySymbol: symbol,
+      isOpen: false,
+    });
+    this.props.CurrencySwitcher(label);
   };
 
-  return (
-    <DropDownContainer>
-      <DropDownHeader onClick={toggling}>
-        <span>{selectedOption || "$"}</span>
-        <DropDownArrowImage isSelectOpen={isOpen} src={ArrowImage} />
-      </DropDownHeader>
-      {isOpen && (
-        <DropDownList>
-          {options.map((option) => (
-            <ListItem
-              onClick={onOptionClicked(option.symbol)}
-              key={Math.random()}
-            >
-              {option.symbol} {option.label}
-            </ListItem>
-          ))}
-        </DropDownList>
-      )}
-    </DropDownContainer>
-  );
+  render() {
+    return (
+      <DropDownContainer>
+        <DropDownHeader onClick={this.toggling}>
+          <span>{this.state.currencySymbol || "$"}</span>
+          <DropDownArrowImage
+            isSelectOpen={this.state.isOpen}
+            src={ArrowImage}
+          />
+        </DropDownHeader>
+        {this.state.isOpen && (
+          <DropDownList>
+            {options.map((option, index) => (
+              <ListItem
+                onClick={this.onOptionClick(option.symbol, option.label)}
+                key={index}
+              >
+                {option.symbol} {option.label}
+              </ListItem>
+            ))}
+          </DropDownList>
+        )}
+      </DropDownContainer>
+    );
+  }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    CurrencySwitcher: (currency) =>
+      dispatch(currencyActions.CurrencySwitch(currency)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(CurrencySwitcher);

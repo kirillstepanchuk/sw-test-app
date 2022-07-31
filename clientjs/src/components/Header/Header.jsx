@@ -34,7 +34,6 @@ export class Header extends Component {
 
   componentDidMount = async () => {
     const { data } = await client.query({ query: QUERY_CART_INFO });
-    console.log("data: ", data);
 
     this.setState({
       cart: data.cart.items,

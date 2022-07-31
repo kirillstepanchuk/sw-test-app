@@ -13,7 +13,7 @@ class App extends Component {
       <BrowserRouter>
         <Suspense fallback={<div>Loading…</div>}>
           <Switch>
-            <Route exact path={ROUTE_PAGES.category}>
+            <Route exact path={`${ROUTE_PAGES.category}/:category`}>
               <Category />
             </Route>
             <Route exact path={ROUTE_PAGES.cart}>
@@ -22,7 +22,7 @@ class App extends Component {
             <Route exact path={ROUTE_PAGES.product}>
               <Product />
             </Route>
-            <Redirect to={ROUTE_PAGES.category} />
+            <Redirect to={`${ROUTE_PAGES.category}/all`} />
           </Switch>
         </Suspense>
       </BrowserRouter>
