@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import cardActions from "../../store/actions/cart";
@@ -14,6 +14,7 @@ export class CartOverlayItem extends Component {
     const { name, gallery, prices, brand } = this.props.product;
     const { activeCurrency, uniqueCartProducts, productIndex, cartProducts } =
       this.props;
+    console.log("uniqueCartProducts: ", uniqueCartProducts);
     const { id, attributes, selectedAttributes } =
       uniqueCartProducts[productIndex];
 
@@ -23,27 +24,27 @@ export class CartOverlayItem extends Component {
 
     return (
       <div>
-        {name} {getQuantityOfItemInArray(cartProducts, uniqueCartProducts[productIndex])}
+        {name}{" "}
+        {getQuantityOfItemInArray(
+          cartProducts,
+          uniqueCartProducts[productIndex]
+        )}
         <button
           onClick={() =>
-            this.props.addItem(
-              id,
-              attributes,
-              selectedAttributes,
-              prices
-            )
-          }>add</button>
+            this.props.addItem(id, attributes, selectedAttributes, prices)
+          }
+        >
+          add
+        </button>
         <button
           onClick={() =>
-            this.props.removeItem(
-              id,
-              attributes,
-              selectedAttributes,
-              prices
-            )
-          }>remove</button>
+            this.props.removeItem(id, attributes, selectedAttributes, prices)
+          }
+        >
+          remove
+        </button>
       </div>
-    )
+    );
   }
 }
 
@@ -61,12 +62,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addItem: (id, attributes, selectedAttributes, prices) =>
       dispatch(
-        cardActions.AddProductToCart(
-          id,
-          attributes,
-          selectedAttributes,
-          prices
-        )
+        cardActions.AddProductToCart(id, attributes, selectedAttributes, prices)
       ),
     removeItem: (id, attributes, selectedAttributes, prices) =>
       dispatch(

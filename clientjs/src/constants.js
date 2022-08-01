@@ -3,3 +3,5 @@ export const ROUTE_PAGES = {
   product: '/product',
   cart: '/cart',
 };
+
+export const OUT_OF_STOCK_MESSAGE = "OUT OF STOCK";

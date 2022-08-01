@@ -1,8 +1,13 @@
 import styled from "styled-components";
 
 export const DropDownContainer = styled("div")`
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+
   position: relative;
   margin-right: 22px;
+
+  z-index: 2;
 `;
 
 export const DropDownHeader = styled("div")`

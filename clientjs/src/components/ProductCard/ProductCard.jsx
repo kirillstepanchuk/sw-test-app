@@ -2,6 +2,16 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import cardActions from "../../store/actions/cart";
+import CartImage from "../../images/white_cart.svg";
+import { OUT_OF_STOCK_MESSAGE } from "../../constants";
+import {
+  CardContainer,
+  CardImage,
+  CardTitle,
+  CardPrice,
+  OutOfStockTitle,
+  AddToCartButton,
+} from "./style";
 
 class ProductCard extends Component {
   constructor(props) {
@@ -28,16 +38,24 @@ class ProductCard extends Component {
     );
 
     return (
-      <div>
-        {id} {name} {`${price[0].currency.symbol} ${price[0].amount}`}
-        <button
-          onClick={() =>
-            this.props.addToCart(id, attributes, initialAttributes, prices)
-          }
-        >
-          add
-        </button>
-      </div>
+      <CardContainer inStock={inStock}>
+        <CardImage src={gallery[0]} alt="" />
+        {/* {id} {name} {`${price[0].currency.symbol} ${price[0].amount}`} */}
+        {inStock && (
+          <AddToCartButton
+            onClick={() =>
+              this.props.addToCart(id, attributes, initialAttributes, prices)
+            }
+          >
+            <img src={CartImage} alt="" />
+          </AddToCartButton>
+        )}
+        {!inStock && <OutOfStockTitle>{OUT_OF_STOCK_MESSAGE}</OutOfStockTitle>}
+        <CardTitle>{name}</CardTitle>
+        <CardPrice>
+          {price[0].currency.symbol} {price[0].amount}
+        </CardPrice>
+      </CardContainer>
     );
   }
 }

@@ -8,6 +8,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { createStore } from 'redux';
 
 import App from './App';
+import GlobalStyle from "./globalStyle";
 import { resolvers } from "./resolvers";
 import rootReducer from "./store/reducers/root";
 
@@ -28,13 +29,13 @@ export const client = new ApolloClient({
   }
 });
 
-const GlobalStyle = createGlobalStyle`
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-`;
+// const GlobalStyle = createGlobalStyle`
+//   * {
+//     box-sizing: border-box;
+//     margin: 0;
+//     padding: 0;
+//   }
+// `;
 
 const store = createStore(rootReducer, composeWithDevTools());
 

@@ -4,11 +4,28 @@ export const CardButtonContainer = styled("div")`
   position: relative;
   width: 20px;
   height: 20px;
+
+  z-index: 1;
 `;
 
 export const ImageContainer = styled("img")`
   width: 20px;
   height: 20px;
+`;
+
+export const CartTopInfo = styled("span")`
+  display: block;
+
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+
+  margin-bottom: 32px;
+`;
+
+export const CartTopInfoTitle = styled("span")`
+  font-family: 'Raleway', sans-serif;
+  font-weight: 700;
 `;
 
 export const CartCounter = styled("div")`
@@ -51,7 +68,7 @@ export const CartContent = styled("div")`
   width: 325px;
   height: 400px;
 
-  padding: 40px 15px;
+  padding: 32px 16px;
 
   background-color: #ffffff;
 `;

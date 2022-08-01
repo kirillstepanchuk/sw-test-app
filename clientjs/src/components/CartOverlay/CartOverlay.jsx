@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import gql from "graphql-tag";
 import { connect } from "react-redux";
 
-import { client } from "../../index";
 import CartImage from "../../images/cart.svg";
 import CartOverlayItem from "../CartOverlayItem/CartOverlayItem";
 import {
@@ -11,6 +10,8 @@ import {
   CartCounter,
   ModalBackground,
   CartContent,
+  CartTopInfo,
+  CartTopInfoTitle,
 } from "./style";
 import { Link } from "react-router-dom";
 import { Query } from "react-apollo";
@@ -102,9 +103,10 @@ export class CartOverlay extends Component {
           onClick={this.onBackgroundClick}
         ></ModalBackground>
         <CartContent show={this.state.isOpen}>
-          <p>
-            <span>My Bag</span>, {0} items
-          </p>
+          <CartTopInfo>
+            <CartTopInfoTitle>My Bag</CartTopInfoTitle>, {cartProducts.length}{" "}
+            items
+          </CartTopInfo>
           <div>
             {cartProducts.length !== 0 ? (
               uniqueIds.map((productId, index) => (
