@@ -1,9 +1,15 @@
 import React, { Component } from "react";
-import gql from "graphql-tag";
 import { connect } from "react-redux";
+import { Query } from "react-apollo";
 
+import Loading from "../Loading/Loading";
 import CartImage from "../../images/cart.svg";
 import CartOverlayItem from "../CartOverlayItem/CartOverlayItem";
+import cardActions from "../../store/actions/cart";
+import getUniqueElementsFromArray from "../../utils/getUniqueElementsFromArray";
+import getTotalPrice from "../../utils/getTotalPrice";
+import { ROUTE_PAGES } from "../../constants";
+import { GET_PRODUCT } from "../../queries/products";
 import {
   CardButtonContainer,
   ImageContainer,
@@ -12,52 +18,16 @@ import {
   CartContent,
   CartTopInfo,
   CartTopInfoTitle,
+  CartButton,
+  CardListContainer,
+  TotalPriceContainer,
+  TotalPriceTitle,
+  TotalPriceValue,
+  CartButtonsContainer,
+  ViewBagButton,
+  CheckOutButton,
+  EmptyCartOverlayContainer,
 } from "./style";
-import { Link } from "react-router-dom";
-import { Query } from "react-apollo";
-import { ROUTE_PAGES } from "../../constants";
-import cardActions from "../../store/actions/cart";
-import getUniqueElementsFromArray from "../../utils/getUniqueElementsFromArray";
-
-export const QUERY_CART_INFO = gql`
-  query {
-    cart @client {
-      items {
-        name
-      }
-      total
-    }
-    currency @client
-  }
-`;
-
-const GET_PRODUCT = gql`
-  query ($productId: String!) {
-    product(id: $productId) {
-      id
-      name
-      gallery
-      description
-      attributes {
-        name
-        type
-        items {
-          displayValue
-          value
-        }
-      }
-      prices {
-        currency {
-          label
-          symbol
-        }
-        amount
-      }
-      brand
-      inStock
-    }
-  }
-`;
 
 export class CartOverlay extends Component {
   constructor(props) {
@@ -80,11 +50,11 @@ export class CartOverlay extends Component {
   };
 
   render() {
-    const { miniCartClose, activeCurrency, cartProducts } = this.props;
+    const { activeCurrency, cartProducts } = this.props;
 
     const uniqueProducts = getUniqueElementsFromArray(cartProducts);
     const uniqueIds = uniqueProducts.map((product) => product.id);
-    // const totalBill = totalAmount(cartProducts, activeCurrency);
+    const totalBill = getTotalPrice(cartProducts, activeCurrency);
 
     const symbol = cartProducts[0]?.prices.filter(
       (price) => price.currency.label === activeCurrency
@@ -92,12 +62,12 @@ export class CartOverlay extends Component {
 
     return (
       <CardButtonContainer>
-        <div onClick={this.onCartImageClick}>
+        <CartButton onClick={this.onCartImageClick}>
           <ImageContainer src={CartImage} />
           {cartProducts.length > 0 && (
             <CartCounter>{cartProducts.length}</CartCounter>
           )}
-        </div>
+        </CartButton>
         <ModalBackground
           show={this.state.isOpen}
           onClick={this.onBackgroundClick}
@@ -107,16 +77,16 @@ export class CartOverlay extends Component {
             <CartTopInfoTitle>My Bag</CartTopInfoTitle>, {cartProducts.length}{" "}
             items
           </CartTopInfo>
-          <div>
+          <CardListContainer>
             {cartProducts.length !== 0 ? (
               uniqueIds.map((productId, index) => (
                 <Query
                   key={index}
                   query={GET_PRODUCT}
-                  variables={{ productId }}
+                  variables={{ id: productId }}
                 >
                   {({ data, loading, error }) => {
-                    if (loading) return <span>Loading...</span>;
+                    if (loading) return <Loading />;
                     if (error) return console.error(error);
 
                     return (
@@ -131,15 +101,27 @@ export class CartOverlay extends Component {
                 </Query>
               ))
             ) : (
-              <div>there are no items in cart</div>
+              <EmptyCartOverlayContainer>
+                Cart is empty =(
+              </EmptyCartOverlayContainer>
             )}
-          </div>
-          {/* <div>
-            Total {this.state.data.currency} {this.state.data.cart.total}
-          </div> */}
-          <div>
-            <Link to={ROUTE_PAGES.cart}>VIEW BAG</Link>
-          </div>
+          </CardListContainer>
+          {cartProducts.length !== 0 && (
+            <>
+              <TotalPriceContainer>
+                <TotalPriceTitle>Total</TotalPriceTitle>
+                <TotalPriceValue>
+                  {cartProducts.length > 0
+                    ? `${symbol[0].currency.symbol} ${totalBill}`
+                    : 0}
+                </TotalPriceValue>
+              </TotalPriceContainer>
+              <CartButtonsContainer>
+                <ViewBagButton to={ROUTE_PAGES.cart}>VIEW BAG</ViewBagButton>
+                <CheckOutButton>CHECK OUT</CheckOutButton>
+              </CartButtonsContainer>
+            </>
+          )}
         </CartContent>
       </CardButtonContainer>
     );

@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import cardActions from "../../store/actions/cart";
+import { OUT_OF_STOCK_MESSAGE, ROUTE_PAGES } from "../../constants";
 import CartImage from "../../images/white_cart.svg";
-import { OUT_OF_STOCK_MESSAGE } from "../../constants";
 import {
   CardContainer,
   CardImage,
@@ -38,14 +38,17 @@ class ProductCard extends Component {
     );
 
     return (
-      <CardContainer inStock={inStock}>
+      <CardContainer
+        to={inStock && `${ROUTE_PAGES.product}/${id}`}
+        inStock={inStock}
+      >
         <CardImage src={gallery[0]} alt="" />
-        {/* {id} {name} {`${price[0].currency.symbol} ${price[0].amount}`} */}
         {inStock && (
           <AddToCartButton
-            onClick={() =>
-              this.props.addToCart(id, attributes, initialAttributes, prices)
-            }
+            onClick={(evt) => {
+              evt.preventDefault();
+              this.props.addToCart(id, attributes, initialAttributes, prices);
+            }}
           >
             <img src={CartImage} alt="" />
           </AddToCartButton>

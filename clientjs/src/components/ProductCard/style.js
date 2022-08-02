@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const AddToCartButton = styled("button")`
   opacity: 0;
@@ -19,12 +20,13 @@ export const AddToCartButton = styled("button")`
   align-items: center;
 
   cursor: pointer;
-
-  transition: all 0.3s ease;
 `;
 
-export const CardContainer = styled("div")`
+export const CardContainer = styled(Link)`
   position: relative;
+
+  text-decoration: none;
+  color: #1D1F22;
 
   width: 386px;
   height: 444px;

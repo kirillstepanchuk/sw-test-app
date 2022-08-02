@@ -1,6 +1,7 @@
 import React, { Component, Suspense, lazy } from "react";
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
+import Loading from "./components/Loading/Loading";
 import { ROUTE_PAGES } from './constants';
 
 const Category = lazy(() => import('./pages/Category'));
@@ -11,7 +12,7 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <Suspense fallback={<div>Loading…</div>}>
+        <Suspense fallback={<Loading />}>
           <Switch>
             <Route exact path={`${ROUTE_PAGES.category}/:category`}>
               <Category />
@@ -19,7 +20,7 @@ class App extends Component {
             <Route exact path={ROUTE_PAGES.cart}>
               <Cart />
             </Route>
-            <Route exact path={ROUTE_PAGES.product}>
+            <Route exact path={`${ROUTE_PAGES.product}/:id`}>
               <Product />
             </Route>
             <Redirect to={`${ROUTE_PAGES.category}/all`} />

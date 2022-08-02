@@ -19,7 +19,7 @@ export const QUERY_PRODUCTS = gql`
   }
 `;
 
-export class Category extends Component {
+export class CategoryPage extends Component {
   constructor() {
     super();
     this.state = {
@@ -64,4 +64,4 @@ export class Category extends Component {
   }
 }
 
-export default Category;
+export default CategoryPage;

@@ -5,3 +5,5 @@ export const ROUTE_PAGES = {
 };
 
 export const OUT_OF_STOCK_MESSAGE = "OUT OF STOCK";
+
+export const TAX_PERCENT = 21;

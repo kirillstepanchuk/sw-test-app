@@ -1,9 +1,16 @@
 import React, { Component } from "react";
+import Cart from "../components/Cart/Cart";
+import Header from "../components/Header/Header";
 
-export class Cart extends Component {
+export class CartPage extends Component {
   render() {
-    return <div>Cart</div>;
+    return (
+      <div>
+        <Header />
+        <Cart />
+      </div>
+    );
   }
 }
 
-export default Cart;
+export default CartPage;

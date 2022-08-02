@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 import { Container } from "./style";
 
-export class MainContainer extends Component {
+class MainContainer extends Component {
   render() {
     return <Container>{this.props.children}</Container>;
   }
 }
 
-export default MainContainer
+export default MainContainer;

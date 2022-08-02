@@ -1,24 +1,21 @@
 import React, { Component } from "react";
-import gql from "graphql-tag";
 import { Query } from "react-apollo";
+import { withRouter } from "react-router-dom";
 
+import Loading from "../Loading/Loading";
 import { ROUTE_PAGES } from "../../constants";
+import { GET_CATEGORIES } from "../../queries/category";
 import { CategoryLink, TabsContainer } from "./style";
-
-const GET_CATEGORIES = gql`
-  query {
-    categories {
-      name
-    }
-  }
-`;
 
 class Tabs extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      currentCategory: "all",
-    };
+    this.state = {};
+  }
+
+  componentDidMount() {
+    const { category } = this.props.match.params;
+    this.setState({ currentCategory: category });
   }
 
   render() {
@@ -26,7 +23,7 @@ class Tabs extends Component {
       <TabsContainer>
         <Query query={GET_CATEGORIES}>
           {({ data, loading, error }) => {
-            if (loading) return <span>Loading...</span>;
+            if (loading) return <Loading />;
             if (error) console.error(error);
 
             return data.categories.map((category, index) => (
@@ -48,4 +45,4 @@ class Tabs extends Component {
   }
 }
 
-export default Tabs;
+export default withRouter(Tabs);

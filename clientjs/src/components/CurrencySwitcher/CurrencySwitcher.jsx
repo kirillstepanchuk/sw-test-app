@@ -1,8 +1,11 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Query } from "react-apollo";
 
-import ArrowImage from "../../images/switcher_arrow.svg";
+import Loading from "../Loading/Loading";
 import currencyActions from "../../store/actions/currency";
+import { GET_CURRENCIES } from "../../queries/currency";
+import ArrowImage from "../../images/switcher_arrow.svg";
 import {
   DropDownContainer,
   DropDownHeader,
@@ -10,29 +13,6 @@ import {
   DropDownList,
   ListItem,
 } from "./style";
-
-const options = [
-  {
-    label: "USD",
-    symbol: "$",
-  },
-  {
-    label: "GBP",
-    symbol: "£",
-  },
-  {
-    label: "AUD",
-    symbol: "A$",
-  },
-  {
-    label: "JPY",
-    symbol: "¥",
-  },
-  {
-    label: "RUB",
-    symbol: "₽",
-  },
-];
 
 class CurrencySwitcher extends Component {
   constructor(props) {
@@ -43,7 +23,7 @@ class CurrencySwitcher extends Component {
     };
   }
 
-  toggling = () => this.setState({ isOpen: !this.state.isOpen });
+  onDropDownButtonClick = () => this.setState({ isOpen: !this.state.isOpen });
 
   onOptionClick = (symbol, label) => () => {
     this.setState({
@@ -56,7 +36,7 @@ class CurrencySwitcher extends Component {
   render() {
     return (
       <DropDownContainer>
-        <DropDownHeader onClick={this.toggling}>
+        <DropDownHeader onClick={this.onDropDownButtonClick}>
           <span>{this.state.currencySymbol || "$"}</span>
           <DropDownArrowImage
             isSelectOpen={this.state.isOpen}
@@ -65,14 +45,21 @@ class CurrencySwitcher extends Component {
         </DropDownHeader>
         {this.state.isOpen && (
           <DropDownList>
-            {options.map((option, index) => (
-              <ListItem
-                onClick={this.onOptionClick(option.symbol, option.label)}
-                key={index}
-              >
-                {option.symbol} {option.label}
-              </ListItem>
-            ))}
+            <Query query={GET_CURRENCIES}>
+              {({ data, loading, error }) => {
+                if (loading) return <Loading />;
+                if (error) console.error(error);
+
+                return data.currencies.map((option, index) => (
+                  <ListItem
+                    onClick={this.onOptionClick(option.symbol, option.label)}
+                    key={index}
+                  >
+                    {option.symbol} {option.label}
+                  </ListItem>
+                ));
+              }}
+            </Query>
           </DropDownList>
         )}
       </DropDownContainer>

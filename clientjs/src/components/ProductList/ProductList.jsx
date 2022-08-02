@@ -1,40 +1,12 @@
 import React, { Component } from "react";
-import gql from "graphql-tag";
 import { withRouter } from "react-router-dom";
 import { Query } from "react-apollo";
 
 import ProductCard from "../ProductCard/ProductCard";
 import MainContainer from "../MainContainer/MainContainer";
+import Loading from "../Loading/Loading";
+import { GET_PRODUCTS } from "../../queries/products";
 import { Heading, ProductListContainer } from "./style";
-
-const GET_PRODUCTS = gql`
-  query ($category: String!) {
-    category(input: { title: $category }) {
-      name
-      products {
-        id
-        name
-        gallery
-        attributes {
-          name
-          type
-          items {
-            displayValue
-            value
-          }
-        }
-        inStock
-        prices {
-          currency {
-            label
-            symbol
-          }
-          amount
-        }
-      }
-    }
-  }
-`;
 
 class ProductList extends Component {
   render() {
@@ -48,7 +20,7 @@ class ProductList extends Component {
         <ProductListContainer>
           <Query query={GET_PRODUCTS} variables={{ category }}>
             {({ data, loading, error }) => {
-              if (loading) return <div>Loading</div>;
+              if (loading) return <Loading />;
               if (error) console.error(error);
 
               return data.category.products.map((product) => (

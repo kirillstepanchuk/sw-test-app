@@ -1,9 +1,17 @@
 import React, { Component } from "react";
 
-export class Product extends Component {
+import Header from "../components/Header/Header";
+import ProductDescription from "../components/ProductDescription/ProductDescription";
+
+export class ProductPage extends Component {
   render() {
-    return <div>Product</div>;
+    return (
+      <div>
+        <Header />
+        <ProductDescription />
+      </div>
+    );
   }
 }
 
-export default Product;
+export default ProductPage;
