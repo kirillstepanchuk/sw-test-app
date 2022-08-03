@@ -39,10 +39,10 @@ class ProductCard extends Component {
 
     return (
       <CardContainer
-        to={inStock && `${ROUTE_PAGES.product}/${id}`}
-        inStock={inStock}
+        to={`${ROUTE_PAGES.product}/${id}`}
+        instock={inStock ? 1 : 0}
       >
-        <CardImage src={gallery[0]} alt="" />
+        <CardImage src={gallery[0]} alt="Image" />
         {inStock && (
           <AddToCartButton
             onClick={(evt) => {

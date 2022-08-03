@@ -8,38 +8,50 @@ import { GET_CATEGORIES } from "../../queries/category";
 import { CategoryLink, TabsContainer } from "./style";
 
 class Tabs extends Component {
+  _isMounted = false;
+
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   componentDidMount() {
+    this._isMounted = true;
+
     const { category } = this.props.match.params;
     this.setState({ currentCategory: category });
   }
 
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
   render() {
+    const { currentCategory } = this.state;
+
     return (
       <TabsContainer>
-        <Query query={GET_CATEGORIES}>
-          {({ data, loading, error }) => {
-            if (loading) return <Loading />;
-            if (error) console.error(error);
+        {this._isMounted && (
+          <Query query={GET_CATEGORIES}>
+            {({ data, loading, error }) => {
+              if (loading) return <Loading />;
+              if (error) console.error(error);
 
-            return data.categories.map((category, index) => (
-              <CategoryLink
-                key={index}
-                to={`${ROUTE_PAGES.category}/${category.name}`}
-                active={category.name === this.state.currentCategory}
-                onClick={() => {
-                  this.setState({ currentCategory: category.name });
-                }}
-              >
-                {category.name.toUpperCase()}
-              </CategoryLink>
-            ));
-          }}
-        </Query>
+              return data.categories.map((category, index) => (
+                <CategoryLink
+                  key={index}
+                  to={`${ROUTE_PAGES.category}/${category.name}`}
+                  active={category.name === currentCategory ? 1 : 0}
+                  onClick={() => {
+                    this.setState({ currentCategory: category.name });
+                  }}
+                >
+                  {category.name.toUpperCase()}
+                </CategoryLink>
+              ));
+            }}
+          </Query>
+        )}
       </TabsContainer>
     );
   }

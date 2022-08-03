@@ -23,20 +23,13 @@ const RemoveProductFromCart = (id, attributes, selectedAttributes, prices) => ({
 
 const CheckOutProductsFromCart = () => ({
   type: CHECK_OUT_PRODUCTS_FROM_CART,
-  payload: [],
 });
 
-
-const setProductAttributes = (attributes) => ({
-  type: SET_ATTRIBUTES,
-  payload: attributes,
-});
 
 const cartActions = {
   AddProductToCart,
   RemoveProductFromCart,
   CheckOutProductsFromCart,
-  setProductAttributes,
 };
 
 export default cartActions;

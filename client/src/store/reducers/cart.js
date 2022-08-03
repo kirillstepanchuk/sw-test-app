@@ -44,7 +44,7 @@ const reducer = (
     case CHECK_OUT_PRODUCTS_FROM_CART:
       return {
         ...state,
-        cartProducts: action.payload,
+        cartProducts: [],
       };
 
     default:

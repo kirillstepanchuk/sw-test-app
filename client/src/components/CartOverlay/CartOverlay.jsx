@@ -5,7 +5,7 @@ import { Query } from "react-apollo";
 import Loading from "../Loading/Loading";
 import CartImage from "../../images/cart.svg";
 import CartOverlayItem from "../CartOverlayItem/CartOverlayItem";
-import cardActions from "../../store/actions/cart";
+import cartActions from "../../store/actions/cart";
 import getUniqueElementsFromArray from "../../utils/getUniqueElementsFromArray";
 import getTotalPrice from "../../utils/getTotalPrice";
 import { ROUTE_PAGES } from "../../constants";
@@ -118,7 +118,9 @@ export class CartOverlay extends Component {
               </TotalPriceContainer>
               <CartButtonsContainer>
                 <ViewBagButton to={ROUTE_PAGES.cart}>VIEW BAG</ViewBagButton>
-                <CheckOutButton>CHECK OUT</CheckOutButton>
+                <CheckOutButton onClick={this.props.checkOut}>
+                  CHECK OUT
+                </CheckOutButton>
               </CartButtonsContainer>
             </>
           )}
@@ -140,7 +142,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    checkOut: () => dispatch(cardActions.CheckOutProductsFromCart()),
+    checkOut: () => dispatch(cartActions.CheckOutProductsFromCart()),
   };
 };
 

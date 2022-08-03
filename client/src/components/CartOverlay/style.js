@@ -143,6 +143,8 @@ export const CheckOutButton = styled("button")`
 
   border: none;
   background-color: #5ECE7B;
+
+  cursor: pointer;
 `;
 
 export const EmptyCartOverlayContainer = styled("div")`

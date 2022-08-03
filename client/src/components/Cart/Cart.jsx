@@ -5,6 +5,7 @@ import { Query } from "react-apollo";
 import Loading from "../Loading/Loading";
 import CartItem from "../CartItem/CartItem";
 import MainContainer from "../MainContainer/MainContainer";
+import cartActions from "../../store/actions/cart";
 import getUniqueElementsFromArray from "../../utils/getUniqueElementsFromArray";
 import getTotalPrice from "../../utils/getTotalPrice";
 import getTaxFromPrice from "../../utils/getTaxFromPrice";
@@ -95,7 +96,7 @@ export class Cart extends Component {
                   </BottomCartValue>
                 </BottomCartInfo>
 
-                <OrderButton>ORDER</OrderButton>
+                <OrderButton onClick={this.props.checkOut}>ORDER</OrderButton>
               </BottomCartContainer>
             </>
           ) : (
@@ -124,4 +125,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Cart);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    checkOut: () => dispatch(cartActions.CheckOutProductsFromCart()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);

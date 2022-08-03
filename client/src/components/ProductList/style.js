@@ -14,4 +14,6 @@ export const ProductListContainer = styled("div")`
   flex-wrap: wrap;
   row-gap: 100px;
   column-gap: 40px;
+
+  padding-bottom: 90px;
 `;

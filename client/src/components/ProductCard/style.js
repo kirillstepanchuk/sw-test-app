@@ -33,10 +33,10 @@ export const CardContainer = styled(Link)`
 
   padding: 15px;
 
-  opacity: ${props => props.inStock ? "1" : ".5"};
+  opacity: ${({ instock }) => instock ? "1" : ".5"};
 
   &:hover {
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   }
 
   &:hover ${AddToCartButton} {
