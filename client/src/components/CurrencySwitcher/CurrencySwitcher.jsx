@@ -8,7 +8,8 @@ import { GET_CURRENCIES } from "../../queries/currency";
 import ArrowImage from "../../images/switcher_arrow.svg";
 import {
   DropDownContainer,
-  DropDownHeader,
+  DropDownButton,
+  CurrentSymbol,
   DropDownArrowImage,
   DropDownList,
   ListItem,
@@ -36,13 +37,13 @@ class CurrencySwitcher extends Component {
   render() {
     return (
       <DropDownContainer>
-        <DropDownHeader onClick={this.onDropDownButtonClick}>
-          <span>{this.state.currencySymbol || "$"}</span>
+        <DropDownButton onClick={this.onDropDownButtonClick}>
+          <CurrentSymbol>{this.state.currencySymbol || "$"}</CurrentSymbol>
           <DropDownArrowImage
             isSelectOpen={this.state.isOpen}
             src={ArrowImage}
           />
-        </DropDownHeader>
+        </DropDownButton>
         {this.state.isOpen && (
           <DropDownList>
             <Query query={GET_CURRENCIES}>

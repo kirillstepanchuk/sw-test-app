@@ -1,11 +1,35 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+export const CartCounter = styled("div")`
+  position: absolute;
+  right: -10px;
+  top: -10px;
+
+  color: #ffffff;
+
+  width: 20px;
+  height: 20px;
+
+  background-color: #000000;
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: .5s;
+`;
+
 export const CartButton = styled("button")`
   background: none;
   border: none;
 
   cursor: pointer;
+
+  &:hover ${CartCounter} {
+    background-color: #5ECE7B;
+  }
 `;
 
 export const CardButtonContainer = styled("div")`
@@ -32,24 +56,6 @@ export const CartTopInfo = styled("span")`
 export const CartTopInfoTitle = styled("span")`
   font-family: 'Raleway', sans-serif;
   font-weight: 700;
-`;
-
-export const CartCounter = styled("div")`
-  position: absolute;
-  right: -10px;
-  top: -10px;
-
-  color: #ffffff;
-
-  width: 20px;
-  height: 20px;
-
-  background-color: #000000;
-  border-radius: 50%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 export const ModalBackground = styled("div")`
@@ -125,6 +131,15 @@ export const ViewBagButton = styled(Link)`
   height: 43px;
 
   border: 1px solid #1D1F22;
+
+  transition: .5s;
+
+  &:hover {
+    color: #ffffff;
+
+    border-color: #5ECE7B;
+    background-color: #5ECE7B;
+  }
 `;
 
 export const CheckOutButton = styled("button")`
@@ -141,10 +156,19 @@ export const CheckOutButton = styled("button")`
   width: 140px;
   height: 43px;
 
-  border: none;
+  border: 1px solid #5ECE7B;
   background-color: #5ECE7B;
 
   cursor: pointer;
+
+  transition: .5s;
+
+  &:hover {
+    color: #1D1F22;
+
+    border: 1px solid #1D1F22;
+    background-color: #ffffff;
+  }
 `;
 
 export const EmptyCartOverlayContainer = styled("div")`

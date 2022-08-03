@@ -63,6 +63,12 @@ export const CountButton = styled("button")`
   align-items: center;
 
   cursor: pointer;
+
+  transition: .5s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 export const ItemQuantity = styled("span")`
@@ -102,4 +108,10 @@ export const ArrowButton = styled("div")`
   position: absolute;
   bottom: 20px;
   right: ${({ buttonDirection }) => (buttonDirection === "right" ? "16px" : "48px")};
+
+  transition: .5s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 `;

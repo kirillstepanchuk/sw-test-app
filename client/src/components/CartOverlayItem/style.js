@@ -48,6 +48,12 @@ export const CountButton = styled("button")`
   align-items: center;
 
   cursor: pointer;
+
+  transition: .5s;
+
+  &:hover {
+    transform: scale(1.1);
+  };
 `;
 
 export const CountButtonsContainer = styled("div")`

@@ -33,44 +33,28 @@ export const AttributeSwatchContainer = styled("div")`
   height: 32px;
   margin: 8px 12px 8px 0;
 
-  border: 1px solid #D3D2D5;
+  border: 1px solid #ffffff;
+  box-shadow: inset 0 0 0 1px #ffffff;
 
   background-color: ${({ colorHex }) => colorHex};
 
-  ${({ type }) => type === "overlayCart"
-    ? `
-      width: 16px;
-      height: 16px;
-      margin: 4px 6px 4px 0;
-    ` : `
-      cursor: pointer;
-  `};
+  transition: .5s;
 
-  ${({ active }) => !active && css`
-    &:before {
-      content: "";
-
-      position: absolute;
-      top: -3px;
-      left: -3px;
-
-      width: 36px;
-      height: 36px;
-
-      border: 1px solid #5ECE7B;
-
-      box-sizing: border-box;
-    }
+  ${({ type }) => type === "overlayCart" && `
+    width: 16px;
+    height: 16px;
+    margin: 4px 6px 4px 0;
   `}
 
-  ${({ active, type }) => (!active && type === "overlayCart") && css`
-    &:before {
-      top: -3px;
-      left: -3px;
+  ${({ active }) => !active && css`
+    border-color: #5ECE7B;
+  `}
 
-      width: 20px;
-      height: 20px;
-    }
+  ${({ active, type }) => (active && type === "singleProduct") && `
+    &:hover {
+      border-color: #1d1f22;
+      cursor: pointer;
+    };
   `}
 `;
 
@@ -83,6 +67,8 @@ export const AttributeInnerContainer = styled("div")`
 
   border: 1px solid #1d1f22;
 
+  transition: .5s;
+
   ${({ type }) => type === "overlayCart"
     ? `
       margin: 4px 6px 4px 0;
@@ -94,7 +80,16 @@ export const AttributeInnerContainer = styled("div")`
   ${({ active }) => active && `
     color: #ffffff;
     background-color: #1d1f22;
-  `}
+  `};
+
+  ${({ active, type }) => (!active && type === "singleProduct") && `
+    &:hover {
+      color: #ffffff;
+
+      border-color: #5ECE7B;
+      background-color: #5ECE7B;
+    }
+  `};
 `;
 
 export const AttributeValue = styled("span")``;

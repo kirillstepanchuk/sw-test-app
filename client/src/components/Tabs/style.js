@@ -23,4 +23,10 @@ export const CategoryLink = styled(Link)`
   height: 80px;
   box-sizing: border-box;
   cursor: pointer;
+
+  transition: .5s;
+
+  &:hover {
+    color: #5ECE7B;
+  }
 `

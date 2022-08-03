@@ -10,12 +10,17 @@ export const DropDownContainer = styled("div")`
   z-index: 2;
 `;
 
-export const DropDownHeader = styled("div")`
+export const CurrentSymbol = styled("span")`
+  font-size: 18px;
+
+  transition: .5s;
+`;
+
+export const DropDownButton = styled("div")`
   background: #ffffff;
 
   width: 38px;
   height: 29px;
-  font-size: 18px;
   padding-left: 15px;
 
   display: flex;
@@ -24,11 +29,17 @@ export const DropDownHeader = styled("div")`
 
   cursor: pointer;
   box-sizing: border-box;
+
+  &:hover ${CurrentSymbol} {
+    color: #5ECE7B;
+  }
 `;
 
 export const DropDownArrowImage = styled("img")`
   width: 8px;
   height: 4px;
+
+  transition: .5s;
 
   transform: ${(props) =>
     props.isSelectOpen ? "rotate(180deg)" : "rotate(0deg)"};

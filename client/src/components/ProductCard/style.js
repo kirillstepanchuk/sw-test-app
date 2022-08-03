@@ -20,6 +20,12 @@ export const AddToCartButton = styled("button")`
   align-items: center;
 
   cursor: pointer;
+
+  transition: .5s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 export const CardContainer = styled(Link)`
@@ -35,8 +41,10 @@ export const CardContainer = styled(Link)`
 
   opacity: ${({ instock }) => instock ? "1" : ".5"};
 
+  transition: .5s;
+
   &:hover {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
   }
 
   &:hover ${AddToCartButton} {

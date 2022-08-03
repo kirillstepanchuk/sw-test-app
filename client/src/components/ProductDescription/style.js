@@ -31,6 +31,12 @@ export const SecondaryImage = styled("img")`
   margin-bottom: 40px;
 
   cursor: pointer;
+
+  transition: 0.5s;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 export const PrimaryImageContainer = styled("div")`
@@ -99,12 +105,15 @@ export const AddCartContainer = styled("div")`
   justify-content: center;
   align-items: center;
 
-  transition: all 0.3s ease;
+  transition: 0.5s;
+
+  cursor: pointer;
 
   &:hover {
-    cursor: pointer;
+    color: #1D1F22;
+
+    border: 1px solid #1D1F22;
     background-color: #ffffff;
-    color: #5ECE7B;
   }
 `;
 
@@ -129,10 +138,4 @@ export const Desc = styled("div")`
   font-size: 16px;
 
   padding-top: 40px;
-`;
-
-export const FullDesc = styled("span")`
-  font-family: "Roboto", sans-serif;
-  font-weight: 400;
-  font-size: 16px;
 `;

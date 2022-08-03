@@ -56,10 +56,19 @@ export const EmptyCartButton = styled(Link)`
 
   margin-top: 40px;
 
-  border: none;
+  border: 1px solid #5ECE7B;
   background-color: #5ECE7B;
 
   cursor: pointer;
+
+  transition: .5s;
+
+  &:hover {
+    color: #1D1F22;
+
+    border: 1px solid #1D1F22;
+    background-color: #ffffff;
+  }
 `;
 
 export const BottomCartContainer = styled("div")`
@@ -107,4 +116,13 @@ export const OrderButton = styled("button")`
   background-color: #5ECE7B;
 
   cursor: pointer;
+
+  transition: .5s;
+
+  &:hover {
+    color: #1D1F22;
+
+    border: 1px solid #1D1F22;
+    background-color: #ffffff;
+  }
 `;
