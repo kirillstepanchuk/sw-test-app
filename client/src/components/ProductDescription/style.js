@@ -1,13 +1,11 @@
 import styled from "styled-components";
 
-export const OuterContainer = styled("div")`
+export const Container = styled("div")`
   width: 100%;
 
   padding-top: 120px;
   padding-bottom: 140px;
-`;
 
-export const Container = styled("div")`
   display: flex;
 `;
 
@@ -16,14 +14,14 @@ export const ImageContainer = styled("div")`
   justify-content: space-between;
 `;
 
-export const SecondaryImageInnerContainer = styled("div")`
+export const SmallImageContainer = styled("div")`
   display: flex;
   flex-direction: column;
 
   width: 80px;
 `;
 
-export const SecondaryImage = styled("img")`
+export const SmallImage = styled("img")`
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -39,14 +37,14 @@ export const SecondaryImage = styled("img")`
   }
 `;
 
-export const PrimaryImageContainer = styled("div")`
+export const CurrentImageContainer = styled("div")`
   width: 610px;
   height: 511px;
   margin-right: 80px;
   margin-left: 32px;
 `;
 
-export const PrimaryImage = styled("img")`
+export const CurrentImage = styled("img")`
   width: 100%;
   height: 100%;
 
@@ -132,7 +130,7 @@ export const OutOfStockContainer = styled("div")`
   align-items: center;
 `;
 
-export const Desc = styled("div")`
+export const Description = styled("div")`
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-size: 16px;

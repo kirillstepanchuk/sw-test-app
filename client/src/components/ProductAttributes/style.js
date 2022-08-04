@@ -22,7 +22,7 @@ export const AttributeName = styled("span")`
   `}
 `;
 
-export const AttributeOuterContainer = styled("div")`
+export const AttributeContainer = styled("div")`
   display: flex;
 `;
 
@@ -48,9 +48,10 @@ export const AttributeSwatchContainer = styled("div")`
 
   ${({ active }) => !active && css`
     border-color: #5ECE7B;
+    cursor: pointer;
   `}
 
-  ${({ active, type }) => (active && type === "singleProduct") && `
+  ${({ active, type }) => (active && type === "productDescription") && `
     &:hover {
       border-color: #1d1f22;
       cursor: pointer;
@@ -58,7 +59,7 @@ export const AttributeSwatchContainer = styled("div")`
   `}
 `;
 
-export const AttributeInnerContainer = styled("div")`
+export const AttributeValueContainer = styled("div")`
   font-family: "Source Sans Pro", sans-serif;
   font-size: 16px;
   font-weight: 400;
@@ -73,7 +74,7 @@ export const AttributeInnerContainer = styled("div")`
     ? `
       margin: 4px 6px 4px 0;
       padding: 6px 13px;
-    ` : type === "singleProduct" && `
+    ` : type === "productDescription" && `
       cursor: pointer;
   `};
 
@@ -82,7 +83,7 @@ export const AttributeInnerContainer = styled("div")`
     background-color: #1d1f22;
   `};
 
-  ${({ active, type }) => (!active && type === "singleProduct") && `
+  ${({ active, type }) => (!active && type === "productDescription") && `
     &:hover {
       color: #ffffff;
 

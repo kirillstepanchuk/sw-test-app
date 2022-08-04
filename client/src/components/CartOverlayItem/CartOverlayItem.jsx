@@ -18,20 +18,21 @@ import {
 } from "./style";
 
 export class CartOverlayItem extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
     const { name, gallery, prices, brand } = this.props.product;
-    const { activeCurrency, uniqueCartProducts, productIndex, cartProducts } =
-      this.props;
+    const {
+      activeCurrency,
+      uniqueCartProducts,
+      productIndex,
+      cartProducts,
+      addItem,
+      removeItem,
+    } = this.props;
     const { id, attributes, selectedAttributes } =
       uniqueCartProducts[productIndex];
 
     const price = prices.filter(
-      (price) => price.currency.label === activeCurrency
+      (price) => price.currency.label === activeCurrency.label
     );
 
     return (
@@ -39,7 +40,7 @@ export class CartOverlayItem extends Component {
         <CardItemLeftContainer>
           <CartItemBrand>{brand}</CartItemBrand>
           <CartItemName>{name}</CartItemName>
-          <CartItemPrice>{`${price[0].currency.symbol} ${price[0].amount}`}</CartItemPrice>
+          <CartItemPrice>{`${activeCurrency.symbol} ${price[0].amount}`}</CartItemPrice>
           <ProductAttributes
             type="overlayCart"
             attributes={uniqueCartProducts[productIndex].attributes}
@@ -51,9 +52,7 @@ export class CartOverlayItem extends Component {
 
         <CountButtonsContainer>
           <CountButton
-            onClick={() =>
-              this.props.addItem(id, attributes, selectedAttributes, prices)
-            }
+            onClick={() => addItem(id, attributes, selectedAttributes, prices)}
           >
             <img src={PlusIcon} alt="Plus" />
           </CountButton>
@@ -63,7 +62,7 @@ export class CartOverlayItem extends Component {
           )}
           <CountButton
             onClick={() =>
-              this.props.removeItem(id, attributes, selectedAttributes, prices)
+              removeItem(id, attributes, selectedAttributes, prices)
             }
           >
             <img src={MinusIcon} alt="Minus" />
@@ -81,8 +80,8 @@ const mapStateToProps = (state) => {
   const { cartProducts } = state.cart;
 
   return {
-    activeCurrency: activeCurrency,
-    cartProducts: cartProducts,
+    activeCurrency,
+    cartProducts,
   };
 };
 

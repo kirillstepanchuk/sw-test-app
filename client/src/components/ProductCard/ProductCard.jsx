@@ -22,7 +22,7 @@ class ProductCard extends Component {
   render() {
     const { id, name, gallery, prices, inStock, attributes } =
       this.props.product;
-    const { activeCurrency } = this.props;
+    const { activeCurrency, addToCart } = this.props;
 
     let initialAttributes = {};
     attributes.forEach((attribute) => {
@@ -34,7 +34,7 @@ class ProductCard extends Component {
     });
 
     const price = prices.filter(
-      (price) => price.currency.label === activeCurrency
+      (price) => price.currency.label === activeCurrency.label
     );
 
     return (
@@ -47,7 +47,7 @@ class ProductCard extends Component {
           <AddToCartButton
             onClick={(evt) => {
               evt.preventDefault();
-              this.props.addToCart(id, attributes, initialAttributes, prices);
+              addToCart(id, attributes, initialAttributes, prices);
             }}
           >
             <img src={CartImage} alt="" />
@@ -56,7 +56,7 @@ class ProductCard extends Component {
         {!inStock && <OutOfStockTitle>{OUT_OF_STOCK_MESSAGE}</OutOfStockTitle>}
         <CardTitle>{name}</CardTitle>
         <CardPrice>
-          {price[0].currency.symbol} {price[0].amount}
+          {activeCurrency.symbol} {price[0].amount}
         </CardPrice>
       </CardContainer>
     );
@@ -67,7 +67,7 @@ const mapStateToProps = (state) => {
   const { activeCurrency } = state.currency;
 
   return {
-    activeCurrency: activeCurrency,
+    activeCurrency,
   };
 };
 

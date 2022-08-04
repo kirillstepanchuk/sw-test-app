@@ -2,11 +2,11 @@ const getTotalPrice = (uniqueProducts, activeCurrency) => {
   return uniqueProducts
     .map((product) => {
       const price = product.prices.filter(
-        (price) => price.currency.label === activeCurrency
+        (price) => price.currency.label === activeCurrency.label
       );
       return price[0].amount;
     })
-    .reduce((a, b) => a + b, 0)
+    .reduce((summ, price) => summ + price, 0)
     .toFixed(2);
 }
 

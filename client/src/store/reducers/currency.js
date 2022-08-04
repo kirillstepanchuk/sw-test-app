@@ -1,7 +1,10 @@
 import { SWITCH_CURRENCY } from "../actionTypes";
 
 const initialState = {
-  activeCurrency: "USD",
+  activeCurrency: {
+    symbol: "$",
+    label: "USD",
+  },
 }
 
 const reducer = (

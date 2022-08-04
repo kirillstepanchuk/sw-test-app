@@ -52,13 +52,19 @@ export class CartItem extends Component {
 
   render() {
     const { name, gallery, prices, brand } = this.props.product;
-    const { activeCurrency, uniqueCartProducts, productIndex, cartProducts } =
-      this.props;
+    const {
+      activeCurrency,
+      uniqueCartProducts,
+      productIndex,
+      cartProducts,
+      addItem,
+      removeItem,
+    } = this.props;
     const { id, attributes, selectedAttributes } =
       uniqueCartProducts[productIndex];
 
     const price = prices.filter(
-      (price) => price.currency.label === activeCurrency
+      (price) => price.currency.label === activeCurrency.label
     );
 
     return (
@@ -66,7 +72,7 @@ export class CartItem extends Component {
         <LeftContentContainer>
           <ItemBrand>{brand}</ItemBrand>
           <ItemName>{name}</ItemName>
-          <ItemPriceValue>{`${price[0].currency.symbol} ${price[0].amount}`}</ItemPriceValue>
+          <ItemPriceValue>{`${activeCurrency.symbol} ${price[0].amount}`}</ItemPriceValue>
           <ProductAttributes
             attributes={uniqueCartProducts[productIndex].attributes}
             selectedAttributes={
@@ -78,7 +84,7 @@ export class CartItem extends Component {
           <QuantityContainer>
             <CountButton
               onClick={() =>
-                this.props.addItem(id, attributes, selectedAttributes, prices)
+                addItem(id, attributes, selectedAttributes, prices)
               }
             >
               <img src={PlusIcon} alt="Plus" width={15} />
@@ -91,12 +97,7 @@ export class CartItem extends Component {
             </ItemQuantity>
             <CountButton
               onClick={() =>
-                this.props.removeItem(
-                  id,
-                  attributes,
-                  selectedAttributes,
-                  prices
-                )
+                removeItem(id, attributes, selectedAttributes, prices)
               }
             >
               <img src={MinusIcon} alt="Minus" width={15} />
@@ -132,8 +133,8 @@ const mapStateToProps = (state) => {
   const { cartProducts } = state.cart;
 
   return {
-    activeCurrency: activeCurrency,
-    cartProducts: cartProducts,
+    activeCurrency,
+    cartProducts,
   };
 };
 

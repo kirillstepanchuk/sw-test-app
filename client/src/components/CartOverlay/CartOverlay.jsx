@@ -57,10 +57,6 @@ export class CartOverlay extends Component {
     const uniqueIds = uniqueProducts.map((product) => product.id);
     const totalBill = getTotalPrice(cartProducts, activeCurrency);
 
-    const symbol = cartProducts[0]?.prices.filter(
-      (price) => price.currency.label === activeCurrency
-    );
-
     return (
       <CardButtonContainer>
         <CartButton onClick={this.onCartImageClick}>
@@ -113,7 +109,7 @@ export class CartOverlay extends Component {
                 <TotalPriceTitle>Total</TotalPriceTitle>
                 <TotalPriceValue>
                   {cartProducts.length > 0
-                    ? `${symbol[0].currency.symbol} ${totalBill}`
+                    ? `${activeCurrency.symbol} ${totalBill}`
                     : 0}
                 </TotalPriceValue>
               </TotalPriceContainer>
@@ -136,8 +132,8 @@ const mapStateToProps = (state) => {
   const { cartProducts } = state.cart;
 
   return {
-    activeCurrency: activeCurrency,
-    cartProducts: cartProducts,
+    activeCurrency,
+    cartProducts,
   };
 };
 

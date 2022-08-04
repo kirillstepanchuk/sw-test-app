@@ -27,12 +27,12 @@ class CurrencySwitcher extends Component {
 
   onDropDownButtonClick = () => this.setState({ isOpen: !this.state.isOpen });
 
-  onOptionClick = (symbol, label) => () => {
+  onOptionClick = (currency) => () => {
     this.setState({
-      currencySymbol: symbol,
+      currencySymbol: currency.symbol,
       isOpen: false,
     });
-    this.props.currencySwitch(label);
+    this.props.currencySwitch(currency);
   };
 
   render() {
@@ -52,10 +52,7 @@ class CurrencySwitcher extends Component {
                 if (error) return <ErrorMessage />;
 
                 return data.currencies.map((option, index) => (
-                  <ListItem
-                    onClick={this.onOptionClick(option.symbol, option.label)}
-                    key={index}
-                  >
+                  <ListItem onClick={this.onOptionClick(option)} key={index}>
                     {option.symbol} {option.label}
                   </ListItem>
                 ));

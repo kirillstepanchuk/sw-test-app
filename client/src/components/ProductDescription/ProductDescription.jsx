@@ -10,35 +10,34 @@ import ProductAttributes from "../ProductAttributes/ProductAttributes";
 import { GET_PRODUCT } from "../../apollo/queries/products";
 import cartActions from "../../store/actions/cart";
 import {
-  OuterContainer,
   Container,
   ImageContainer,
-  SecondaryImageInnerContainer,
-  PrimaryImageContainer,
-  PrimaryImage,
+  SmallImageContainer,
+  CurrentImageContainer,
+  CurrentImage,
   InfoContainer,
   Title,
   SubTitle,
   Price,
-  SecondaryImage,
+  SmallImage,
   PriceValue,
   AddCartContainer,
   AddCart,
   OutOfStockContainer,
-  Desc,
+  Description,
 } from "./style";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
-export class SingleProduct extends Component {
+export class productDescription extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentImageIndex: 0,
+      currentImageId: 0,
     };
   }
 
-  imageChangeHandler = (idx) => {
-    this.setState({ currentImageIndex: idx });
+  onSmallImageClick = (id) => {
+    this.setState({ currentImageId: id });
   };
 
   render() {
@@ -47,89 +46,85 @@ export class SingleProduct extends Component {
 
     return (
       <MainContainer>
-        <OuterContainer>
-          <Query query={GET_PRODUCT} variables={{ id }}>
-            {({ data, loading, error }) => {
-              if (loading) return <Loading />;
-              if (error) return <ErrorMessage />;
+        <Query query={GET_PRODUCT} variables={{ id }}>
+          {({ data, loading, error }) => {
+            if (loading) return <Loading />;
+            if (error) return <ErrorMessage />;
 
-              const {
-                id,
-                name,
-                brand,
-                description,
-                inStock,
-                attributes,
-                gallery,
-                prices,
-              } = data.product;
+            const {
+              id,
+              name,
+              brand,
+              description,
+              inStock,
+              attributes,
+              gallery,
+              prices,
+            } = data.product;
 
-              let initialAttributes = {};
-              attributes.forEach((attribute) => {
-                const { name, items } = attribute;
-                initialAttributes = {
-                  ...initialAttributes,
-                  [name]: items[0].value,
-                };
-              });
+            let initialAttributes = {};
+            attributes.forEach((attribute) => {
+              const { name, items } = attribute;
+              initialAttributes = {
+                ...initialAttributes,
+                [name]: items[0].value,
+              };
+            });
 
-              const price = prices.filter(
-                (price) => price.currency.label === activeCurrency
-              );
+            const price = prices.filter(
+              (price) => price.currency.label === activeCurrency.label
+            );
 
-              return (
-                <Container>
-                  <ImageContainer>
-                    <SecondaryImageInnerContainer>
-                      {gallery.map((pic, index) => (
-                        <SecondaryImage
-                          key={index}
-                          src={pic}
-                          onClick={() => this.imageChangeHandler(index)}
-                        />
-                      ))}
-                    </SecondaryImageInnerContainer>
-                    <PrimaryImageContainer>
-                      <PrimaryImage
-                        src={gallery[this.state.currentImageIndex]}
+            return (
+              <Container>
+                <ImageContainer>
+                  <SmallImageContainer>
+                    {gallery.map((pic, index) => (
+                      <SmallImage
+                        key={index}
+                        src={pic}
+                        onClick={() => this.onSmallImageClick(index)}
                       />
-                    </PrimaryImageContainer>
-                  </ImageContainer>
-                  <InfoContainer>
-                    <Title>{brand}</Title>
-                    <SubTitle>{name}</SubTitle>
-                    <ProductAttributes
-                      type="singleProduct"
-                      attributes={attributes}
-                      initialAttributes={initialAttributes}
-                    />
-                    <Price>PRICE:</Price>
-                    <PriceValue>{`${price[0].currency.symbol} ${price[0].amount}`}</PriceValue>
-                    {inStock ? (
-                      <AddCartContainer
-                        onClick={() =>
-                          this.props.addToCart(
-                            id,
-                            attributes,
-                            selectedAttributes,
-                            prices
-                          )
-                        }
-                      >
-                        <AddCart>ADD TO CART</AddCart>
-                      </AddCartContainer>
-                    ) : (
-                      <OutOfStockContainer>
-                        Sorry, but this product out of stock for now =(
-                      </OutOfStockContainer>
-                    )}
-                    <Desc>{parse(description)}</Desc>
-                  </InfoContainer>
-                </Container>
-              );
-            }}
-          </Query>
-        </OuterContainer>
+                    ))}
+                  </SmallImageContainer>
+                  <CurrentImageContainer>
+                    <CurrentImage src={gallery[this.state.currentImageId]} />
+                  </CurrentImageContainer>
+                </ImageContainer>
+                <InfoContainer>
+                  <Title>{brand}</Title>
+                  <SubTitle>{name}</SubTitle>
+                  <ProductAttributes
+                    type="productDescription"
+                    attributes={attributes}
+                    initialAttributes={initialAttributes}
+                  />
+                  <Price>PRICE:</Price>
+                  <PriceValue>{`${price[0].currency.symbol} ${price[0].amount}`}</PriceValue>
+                  {inStock ? (
+                    <AddCartContainer
+                      onClick={() =>
+                        this.props.addToCart(
+                          id,
+                          attributes,
+                          selectedAttributes,
+                          prices
+                        )
+                      }
+                    >
+                      <AddCart>ADD TO CART</AddCart>
+                    </AddCartContainer>
+                  ) : (
+                    <OutOfStockContainer>
+                      Sorry, but this product out of stock for now =(
+                    </OutOfStockContainer>
+                  )}
+                  <Description>{parse(description)}</Description>
+                </InfoContainer>
+              </Container>
+            );
+          }}
+        </Query>
       </MainContainer>
     );
   }
@@ -160,5 +155,5 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(SingleProduct)
+  connect(mapStateToProps, mapDispatchToProps)(productDescription)
 );

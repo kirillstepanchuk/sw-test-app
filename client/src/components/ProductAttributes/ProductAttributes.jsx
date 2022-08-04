@@ -6,8 +6,8 @@ import {
   AttributesContainer,
   Attributes,
   AttributeName,
-  AttributeOuterContainer,
-  AttributeInnerContainer,
+  AttributeContainer,
+  AttributeValueContainer,
   AttributeSwatchContainer,
   AttributeValue,
 } from "./style";
@@ -18,11 +18,11 @@ class ProductAttributes extends Component {
     this.state = { ...this.props.initialAttributes };
 
     const { setProductAttributes, type } = this.props;
-    if (type === "singleProduct") setProductAttributes(this.state);
+    if (type === "productDescription") setProductAttributes(this.state);
   }
 
-  attributeClickHandler = async (name, value) => {
-    await this.setState({ [name]: value });
+  onAttributeClick = (name, value) => {
+    this.setState({ [name]: value });
 
     const { setProductAttributes } = this.props;
     setProductAttributes(this.state);
@@ -39,46 +39,46 @@ class ProductAttributes extends Component {
               type={type}
             >{`${attribute.name.toUpperCase()} :`}</AttributeName>
             {attribute.type === "swatch" ? (
-              <AttributeOuterContainer type={type}>
+              <AttributeContainer>
                 {attribute.items.map((item, index) => (
                   <AttributeSwatchContainer
                     type={type}
                     key={index}
                     colorHex={item.value}
                     onClick={() =>
-                      type === "singleProduct"
-                        ? this.attributeClickHandler(attribute.name, item.value)
+                      type === "productDescription"
+                        ? this.onAttributeClick(attribute.name, item.value)
                         : null
                     }
                     active={
-                      type === "singleProduct"
+                      type === "productDescription"
                         ? !(this.state[attribute.name] === item.value)
                         : !(selectedAttributes[attribute.name] === item.value)
                     }
                   />
                 ))}
-              </AttributeOuterContainer>
+              </AttributeContainer>
             ) : (
-              <AttributeOuterContainer type={type}>
+              <AttributeContainer type={type}>
                 {attribute.items.map((item, index) => (
-                  <AttributeInnerContainer
+                  <AttributeValueContainer
                     key={index}
                     type={type}
                     onClick={() =>
-                      type === "singleProduct"
-                        ? this.attributeClickHandler(attribute.name, item.value)
+                      type === "productDescription"
+                        ? this.onAttributeClick(attribute.name, item.value)
                         : null
                     }
                     active={
-                      type === "singleProduct"
+                      type === "productDescription"
                         ? this.state[attribute.name] === item.value
                         : selectedAttributes[attribute.name] === item.value
                     }
                   >
-                    <AttributeValue type={type}>{item.value}</AttributeValue>
-                  </AttributeInnerContainer>
+                    <AttributeValue>{item.value}</AttributeValue>
+                  </AttributeValueContainer>
                 ))}
-              </AttributeOuterContainer>
+              </AttributeContainer>
             )}
           </Attributes>
         ))}

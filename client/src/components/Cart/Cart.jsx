@@ -39,9 +39,6 @@ export class Cart extends Component {
     const uniqueProducts = getUniqueElementsFromArray(cartProducts);
     const uniqueIds = uniqueProducts.map((product) => product.id);
     const totalBill = getTotalPrice(cartProducts, activeCurrency);
-    const currencySymbol = cartProducts[0]?.prices.filter(
-      (price) => price.currency.label === activeCurrency
-    );
 
     return (
       <MainContainer>
@@ -78,9 +75,7 @@ export class Cart extends Component {
                   <BottomCartLabel>Tax {TAX_PERCENT}%:</BottomCartLabel>
                   <BottomCartValue>
                     {cartProducts.length > 0
-                      ? ` ${currencySymbol[0].currency.symbol}${getTaxFromPrice(
-                          totalBill
-                        )}`
+                      ? ` ${activeCurrency.symbol}${getTaxFromPrice(totalBill)}`
                       : 0}
                   </BottomCartValue>
                 </BottomCartInfo>
@@ -92,7 +87,7 @@ export class Cart extends Component {
                   <BottomCartLabel fontWeight="medium">Total:</BottomCartLabel>
                   <BottomCartValue>
                     {cartProducts.length > 0
-                      ? ` ${currencySymbol[0].currency.symbol}${totalBill}`
+                      ? ` ${activeCurrency.symbol}${totalBill}`
                       : 0}
                   </BottomCartValue>
                 </BottomCartInfo>
@@ -121,8 +116,8 @@ const mapStateToProps = (state) => {
   const { cartProducts } = state.cart;
 
   return {
-    cartProducts: cartProducts,
-    activeCurrency: activeCurrency,
+    cartProducts,
+    activeCurrency,
   };
 };
 
