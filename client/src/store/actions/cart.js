@@ -1,5 +1,4 @@
 import { ADD_PRODUCT_TO_CART, REMOVE_PRODUCT_FROM_CART, CHECK_OUT_PRODUCTS_FROM_CART } from "../actionTypes";
-import { SET_ATTRIBUTES } from "../actionTypes";
 
 const AddProductToCart = (id, attributes, selectedAttributes, prices) => ({
   type: ADD_PRODUCT_TO_CART,

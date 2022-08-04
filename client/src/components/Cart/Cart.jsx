@@ -34,7 +34,7 @@ export class Cart extends Component {
   }
 
   render() {
-    const { cartProducts, activeCurrency } = this.props;
+    const { cartProducts, activeCurrency, checkOut } = this.props;
 
     const uniqueProducts = getUniqueElementsFromArray(cartProducts);
     const uniqueIds = uniqueProducts.map((product) => product.id);
@@ -97,7 +97,7 @@ export class Cart extends Component {
                   </BottomCartValue>
                 </BottomCartInfo>
 
-                <OrderButton onClick={this.props.checkOut}>ORDER</OrderButton>
+                <OrderButton onClick={checkOut}>ORDER</OrderButton>
               </BottomCartContainer>
             </>
           ) : (

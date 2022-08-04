@@ -21,7 +21,7 @@ class CurrencySwitcher extends Component {
     super(props);
     this.state = {
       isOpen: false,
-      currencySymbol: null,
+      currencySymbol: "$",
     };
   }
 
@@ -32,20 +32,19 @@ class CurrencySwitcher extends Component {
       currencySymbol: symbol,
       isOpen: false,
     });
-    this.props.CurrencySwitcher(label);
+    this.props.currencySwitch(label);
   };
 
   render() {
+    const { currencySymbol, isOpen } = this.state;
+
     return (
       <DropDownContainer>
         <DropDownButton onClick={this.onDropDownButtonClick}>
-          <CurrentSymbol>{this.state.currencySymbol || "$"}</CurrentSymbol>
-          <DropDownArrowImage
-            isSelectOpen={this.state.isOpen}
-            src={ArrowImage}
-          />
+          <CurrentSymbol>{currencySymbol}</CurrentSymbol>
+          <DropDownArrowImage isSelectOpen={isOpen} src={ArrowImage} />
         </DropDownButton>
-        {this.state.isOpen && (
+        {isOpen && (
           <DropDownList>
             <Query query={GET_CURRENCIES}>
               {({ data, loading, error }) => {
@@ -71,7 +70,7 @@ class CurrencySwitcher extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    CurrencySwitcher: (currency) =>
+    currencySwitch: (currency) =>
       dispatch(currencyActions.CurrencySwitch(currency)),
   };
 };
