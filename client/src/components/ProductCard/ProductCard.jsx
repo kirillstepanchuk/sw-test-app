@@ -20,7 +20,7 @@ class ProductCard extends Component {
   }
 
   render() {
-    const { id, name, gallery, prices, inStock, attributes } =
+    const { id, name, brand, gallery, prices, inStock, attributes } =
       this.props.product;
     const { activeCurrency, addToCart } = this.props;
 
@@ -54,7 +54,9 @@ class ProductCard extends Component {
           </AddToCartButton>
         )}
         {!inStock && <OutOfStockTitle>{OUT_OF_STOCK_MESSAGE}</OutOfStockTitle>}
-        <CardTitle>{name}</CardTitle>
+        <CardTitle>
+          {brand} {name}
+        </CardTitle>
         <CardPrice>
           {activeCurrency.symbol} {price[0].amount}
         </CardPrice>

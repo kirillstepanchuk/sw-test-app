@@ -35,6 +35,7 @@ export const GET_PRODUCTS = gql`
       products {
         id
         name
+        brand
         gallery
         attributes {
           name
