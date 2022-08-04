@@ -7,7 +7,7 @@ import parse from "html-react-parser";
 import MainContainer from "../MainContainer/MainContainer";
 import Loading from "../Loading/Loading";
 import ProductAttributes from "../ProductAttributes/ProductAttributes";
-import { GET_PRODUCT } from "../../queries/products";
+import { GET_PRODUCT } from "../../apollo/queries/products";
 import cartActions from "../../store/actions/cart";
 import {
   OuterContainer,
@@ -27,6 +27,7 @@ import {
   OutOfStockContainer,
   Desc,
 } from "./style";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
 export class SingleProduct extends Component {
   constructor(props) {
@@ -50,7 +51,7 @@ export class SingleProduct extends Component {
           <Query query={GET_PRODUCT} variables={{ id }}>
             {({ data, loading, error }) => {
               if (loading) return <Loading />;
-              if (error) console.error(error);
+              if (error) return <ErrorMessage />;
 
               const {
                 id,

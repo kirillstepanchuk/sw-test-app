@@ -9,7 +9,7 @@ import cartActions from "../../store/actions/cart";
 import getUniqueElementsFromArray from "../../utils/getUniqueElementsFromArray";
 import getTotalPrice from "../../utils/getTotalPrice";
 import { ROUTE_PAGES } from "../../constants";
-import { GET_PRODUCT } from "../../queries/products";
+import { GET_PRODUCT } from "../../apollo/queries/products";
 import {
   CardButtonContainer,
   ImageContainer,
@@ -28,6 +28,7 @@ import {
   CheckOutButton,
   EmptyCartOverlayContainer,
 } from "./style";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
 export class CartOverlay extends Component {
   constructor(props) {
@@ -87,7 +88,7 @@ export class CartOverlay extends Component {
                 >
                   {({ data, loading, error }) => {
                     if (loading) return <Loading />;
-                    if (error) return console.error(error);
+                    if (error) return <ErrorMessage />;
 
                     return (
                       <CartOverlayItem

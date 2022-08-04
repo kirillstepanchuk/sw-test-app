@@ -4,7 +4,7 @@ import { Query } from "react-apollo";
 
 import Loading from "../Loading/Loading";
 import currencyActions from "../../store/actions/currency";
-import { GET_CURRENCIES } from "../../queries/currency";
+import { GET_CURRENCIES } from "../../apollo/queries/currency";
 import ArrowImage from "../../images/switcher_arrow.svg";
 import {
   DropDownContainer,
@@ -14,6 +14,7 @@ import {
   DropDownList,
   ListItem,
 } from "./style";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
 class CurrencySwitcher extends Component {
   constructor(props) {
@@ -49,7 +50,7 @@ class CurrencySwitcher extends Component {
             <Query query={GET_CURRENCIES}>
               {({ data, loading, error }) => {
                 if (loading) return <Loading />;
-                if (error) console.error(error);
+                if (error) return <ErrorMessage />;
 
                 return data.currencies.map((option, index) => (
                   <ListItem

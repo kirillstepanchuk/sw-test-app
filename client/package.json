@@ -1,5 +1,6 @@
 {
-  "name": "clientjs",
+  "name": "scandiweb-test-app-client",
+  "author": "Kirill Stepanchuk<kirillstepanchuk0@gmail.com>",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

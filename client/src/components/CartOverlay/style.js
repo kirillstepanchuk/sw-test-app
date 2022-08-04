@@ -92,6 +92,19 @@ export const CardListContainer = styled("div")`
   max-height: 300px;
 
   overflow: scroll;
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #5ECE7B;
+    border-radius: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #1D1F22;
+  }
 `;
 
 export const TotalPriceContainer = styled("div")`

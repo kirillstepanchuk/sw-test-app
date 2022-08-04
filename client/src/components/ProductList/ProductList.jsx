@@ -5,8 +5,9 @@ import { Query } from "react-apollo";
 import ProductCard from "../ProductCard/ProductCard";
 import MainContainer from "../MainContainer/MainContainer";
 import Loading from "../Loading/Loading";
-import { GET_PRODUCTS } from "../../queries/products";
+import { GET_PRODUCTS } from "../../apollo/queries/products";
 import { Heading, ProductListContainer } from "./style";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
 class ProductList extends Component {
   render() {
@@ -21,7 +22,7 @@ class ProductList extends Component {
           <Query query={GET_PRODUCTS} variables={{ category }}>
             {({ data, loading, error }) => {
               if (loading) return <Loading />;
-              if (error) console.error(error);
+              if (error) return <ErrorMessage />;
 
               return data.category.products.map((product) => (
                 <ProductCard key={product.id} product={product} />

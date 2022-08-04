@@ -4,8 +4,9 @@ import { withRouter } from "react-router-dom";
 
 import Loading from "../Loading/Loading";
 import { ROUTE_PAGES } from "../../constants";
-import { GET_CATEGORIES } from "../../queries/category";
+import { GET_CATEGORIES } from "../../apollo/queries/category";
 import { CategoryLink, TabsContainer } from "./style";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
 class Tabs extends Component {
   _isMounted = false;
@@ -35,7 +36,7 @@ class Tabs extends Component {
           <Query query={GET_CATEGORIES}>
             {({ data, loading, error }) => {
               if (loading) return <Loading />;
-              if (error) console.error(error);
+              if (error) return <ErrorMessage />;
 
               return data.categories.map((category, index) => (
                 <CategoryLink

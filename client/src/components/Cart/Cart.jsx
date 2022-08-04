@@ -10,7 +10,7 @@ import getUniqueElementsFromArray from "../../utils/getUniqueElementsFromArray";
 import getTotalPrice from "../../utils/getTotalPrice";
 import getTaxFromPrice from "../../utils/getTaxFromPrice";
 import { TAX_PERCENT, ROUTE_PAGES } from "../../constants";
-import { GET_PRODUCT } from "../../queries/products";
+import { GET_PRODUCT } from "../../apollo/queries/products";
 import {
   CartContainer,
   Heading,
@@ -25,6 +25,7 @@ import {
   EmptyCartMessage,
   EmptyCartButton,
 } from "./style";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
 export class Cart extends Component {
   constructor(props) {
@@ -57,7 +58,7 @@ export class Cart extends Component {
                   >
                     {({ data, loading, error }) => {
                       if (loading) return <Loading />;
-                      if (error) console.error(error);
+                      if (error) return <ErrorMessage />;
 
                       return (
                         <CartItemContainer key={data.product.id}>

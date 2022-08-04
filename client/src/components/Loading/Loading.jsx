@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 
-import { LoadingWrapper, Dot } from "./style";
+import { LoadingContainer, Dot } from "./style";
 
 class Loading extends Component {
   render() {
     return (
-      <LoadingWrapper>
+      <LoadingContainer>
         <Dot delay="0s" />
         <Dot delay="0.5s" />
         <Dot delay="0s" />
-      </LoadingWrapper>
+      </LoadingContainer>
     );
   }
 }

@@ -20,18 +20,18 @@ export const BounceAnimation = keyframes`
   100% { 
     margin-bottom: 0;
   }
-`
+`;
 
-export const LoadingWrapper = styled.div`
+export const LoadingContainer = styled("div")`
   width: 100%;
   height: 100%;
 
   display: flex;
   align-items: center;
   justify-content: center;
-`
+`;
 
-export const Dot = styled.div`
+export const Dot = styled("div")`
   background-color: #5ECE7B;
   border-radius: 50%;
   width: 10px;
@@ -39,4 +39,4 @@ export const Dot = styled.div`
   margin: 0 4px;
   animation: ${BounceAnimation} 2s linear infinite;
   animation-delay: ${(props) => props.delay};
-`
+`;
