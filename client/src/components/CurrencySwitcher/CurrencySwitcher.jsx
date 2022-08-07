@@ -23,6 +23,27 @@ class CurrencySwitcher extends Component {
       isOpen: false,
       currencySymbol: "$",
     };
+
+    this.wrapperRef = React.createRef();
+    this.onOutsideClick = this.onOutsideClick.bind(this);
+  }
+
+  componentDidMount() {
+    document.addEventListener("mousedown", this.onOutsideClick);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.onOutsideClick);
+  }
+
+  onOutsideClick(event) {
+    if (
+      this.wrapperRef &&
+      !this.wrapperRef.current.contains(event.target) &&
+      this.state.isOpen
+    ) {
+      this.setState({ isOpen: false });
+    }
   }
 
   onDropDownButtonClick = () => this.setState({ isOpen: !this.state.isOpen });
@@ -39,7 +60,7 @@ class CurrencySwitcher extends Component {
     const { currencySymbol, isOpen } = this.state;
 
     return (
-      <DropDownContainer>
+      <DropDownContainer ref={this.wrapperRef}>
         <DropDownButton onClick={this.onDropDownButtonClick}>
           <CurrentSymbol>{currencySymbol}</CurrentSymbol>
           <DropDownArrowImage isSelectOpen={isOpen} src={ArrowImage} />
