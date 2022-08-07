@@ -21,8 +21,8 @@ class ProductAttributes extends Component {
     if (type === "productDescription") setProductAttributes(this.state);
   }
 
-  onAttributeClick = (name, value) => {
-    this.setState({ [name]: value });
+  onAttributeClick = async (name, value) => {
+    await this.setState({ [name]: value });
 
     const { setProductAttributes } = this.props;
     setProductAttributes(this.state);
