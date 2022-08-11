@@ -23,7 +23,6 @@ export const SmallImageContainer = styled("div")`
 
 export const SmallImage = styled("img")`
   width: 100%;
-  height: 100%;
   object-fit: contain;
   
   margin-bottom: 40px;
@@ -38,10 +37,30 @@ export const SmallImage = styled("img")`
 `;
 
 export const CurrentImageContainer = styled("div")`
+  position: relative;
+
   width: 610px;
   height: 511px;
+
   margin-right: 80px;
   margin-left: 32px;
+
+  opacity: ${({ instock }) => !instock ? ".5" : "1"};
+`;
+
+export const OutOfStockTitle = styled("span")`
+  font-family: 'Raleway', sans-serif;
+  font-size: 36px;
+  font-weight: 400;
+  text-align: center;
+
+  position: absolute;
+  top: 50%;
+  left: 0;
+  
+  width: 100%;
+
+  color: #8D8F9A;
 `;
 
 export const CurrentImage = styled("img")`
@@ -87,7 +106,7 @@ export const PriceValue = styled("span")`
   font-size: 24px;
 `;
 
-export const AddCartContainer = styled("div")`
+export const AddCartContainer = styled("button")`
   font-family: "Raleway", sans-serif;
   font-weight: 600;
   font-size: 16px;
@@ -97,6 +116,7 @@ export const AddCartContainer = styled("div")`
   width: 292px;
   height: 52px;
   background-color: #5ECE7B;
+  border: 1px solid #5ECE7B;
   color: #ffffff;
 
   display: flex;
@@ -107,6 +127,16 @@ export const AddCartContainer = styled("div")`
 
   cursor: pointer;
 
+  &:disabled {
+    opacity: .5;
+
+    &:hover {
+      background-color: #5ECE7B;
+      border: 1px solid #5ECE7B;
+      color: #ffffff;
+    }
+  }
+
   &:hover {
     color: #1D1F22;
 
@@ -115,7 +145,6 @@ export const AddCartContainer = styled("div")`
   }
 `;
 
-export const AddCart = styled("span")``;
 
 export const OutOfStockContainer = styled("div")`
   font-family: "Raleway", sans-serif;
@@ -136,4 +165,6 @@ export const Description = styled("div")`
   font-size: 16px;
 
   padding-top: 40px;
+
+  width: 292px;
 `;

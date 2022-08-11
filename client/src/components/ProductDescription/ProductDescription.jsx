@@ -6,15 +6,18 @@ import parse from "html-react-parser";
 
 import MainContainer from "../MainContainer/MainContainer";
 import Loading from "../Loading/Loading";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import ProductAttributes from "../ProductAttributes/ProductAttributes";
 import { GET_PRODUCT } from "../../apollo/queries/products";
 import cartActions from "../../store/actions/cart";
 import getFixedPrice from "../../utils/getFixedPrice";
+import { OUT_OF_STOCK_MESSAGE } from "../../constants";
 import {
   Container,
   ImageContainer,
   SmallImageContainer,
   CurrentImageContainer,
+  OutOfStockTitle,
   CurrentImage,
   InfoContainer,
   Title,
@@ -23,11 +26,9 @@ import {
   SmallImage,
   PriceValue,
   AddCartContainer,
-  AddCart,
   OutOfStockContainer,
   Description,
 } from "./style";
-import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
 export class productDescription extends Component {
   constructor(props) {
@@ -82,16 +83,19 @@ export class productDescription extends Component {
               <Container>
                 <ImageContainer>
                   <SmallImageContainer>
-                    {gallery.map((pic, index) => (
+                    {gallery.map((pictureLink, index) => (
                       <SmallImage
                         key={index}
-                        src={pic}
+                        src={pictureLink}
                         onClick={() => this.onSmallImageClick(index)}
                       />
                     ))}
                   </SmallImageContainer>
-                  <CurrentImageContainer>
+                  <CurrentImageContainer instock={inStock}>
                     <CurrentImage src={gallery[this.state.currentImageId]} />
+                    {!inStock && (
+                      <OutOfStockTitle>{OUT_OF_STOCK_MESSAGE}</OutOfStockTitle>
+                    )}
                   </CurrentImageContainer>
                 </ImageContainer>
                 <InfoContainer>
@@ -104,24 +108,25 @@ export class productDescription extends Component {
                   />
                   <Price>PRICE:</Price>
                   <PriceValue>{`${activeCurrency.symbol} ${price}`}</PriceValue>
-                  {inStock ? (
-                    <AddCartContainer
-                      onClick={() =>
-                        this.props.addToCart(
-                          id,
-                          attributes,
-                          selectedAttributes,
-                          prices
-                        )
-                      }
-                    >
-                      <AddCart>ADD TO CART</AddCart>
-                    </AddCartContainer>
-                  ) : (
-                    <OutOfStockContainer>
-                      Sorry, but this product out of stock for now =(
-                    </OutOfStockContainer>
-                  )}
+                  {/* {inStock ? ( */}
+                  <AddCartContainer
+                    disabled={!inStock}
+                    onClick={() =>
+                      this.props.addToCart(
+                        id,
+                        attributes,
+                        selectedAttributes,
+                        prices
+                      )
+                    }
+                  >
+                    ADD TO CART
+                  </AddCartContainer>
+                  {/* // ) : (
+                  //   <OutOfStockContainer>
+                  //     Sorry, but this product out of stock for now =(
+                  //   </OutOfStockContainer>
+                  // )} */}
                   <Description>{parse(description)}</Description>
                 </InfoContainer>
               </Container>
