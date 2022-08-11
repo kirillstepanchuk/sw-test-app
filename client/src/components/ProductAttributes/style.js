@@ -33,7 +33,7 @@ export const AttributeSwatchContainer = styled("div")`
   height: 32px;
   margin: 8px 12px 8px 0;
 
-  border: 1px solid #ffffff;
+  border: 1px solid #1d1f22;
   box-shadow: inset 0 0 0 1px #ffffff;
 
   background-color: ${({ colorHex }) => colorHex};
@@ -53,7 +53,7 @@ export const AttributeSwatchContainer = styled("div")`
 
   ${({ active, type }) => (active && type === "productDescription") && `
     &:hover {
-      border-color: #1d1f22;
+      border-color: #ffffff;
       cursor: pointer;
     };
   `}

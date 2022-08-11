@@ -4,7 +4,9 @@ import { Container } from "./style";
 
 class MainContainer extends Component {
   render() {
-    return <Container>{this.props.children}</Container>;
+    const { children } = this.props;
+
+    return <Container>{children}</Container>;
   }
 }
 

@@ -29,16 +29,19 @@ class Tabs extends Component {
 
   render() {
     const { currentCategory } = this.state;
+    const { _isMounted } = this;
 
     return (
       <TabsContainer>
-        {this._isMounted && (
+        {_isMounted && (
           <Query query={GET_CATEGORIES}>
             {({ data, loading, error }) => {
               if (loading) return <Loading />;
               if (error) return <ErrorMessage />;
 
-              return data.categories.map((category, index) => (
+              const { categories } = data;
+
+              return categories.map((category, index) => (
                 <CategoryLink
                   key={index}
                   to={`${ROUTE_PAGES.category}/${category.name}`}

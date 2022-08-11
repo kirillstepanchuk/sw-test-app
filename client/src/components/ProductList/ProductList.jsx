@@ -24,7 +24,9 @@ class ProductList extends Component {
               if (loading) return <Loading />;
               if (error) return <ErrorMessage />;
 
-              return data.category.products.map((product) => (
+              const { products } = data.category;
+
+              return products.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ));
             }}

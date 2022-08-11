@@ -106,7 +106,7 @@ export const PriceValue = styled("span")`
   font-size: 24px;
 `;
 
-export const AddCartContainer = styled("button")`
+export const AddToCartButton = styled("button")`
   font-family: "Raleway", sans-serif;
   font-weight: 600;
   font-size: 16px;
@@ -143,20 +143,6 @@ export const AddCartContainer = styled("button")`
     border: 1px solid #1D1F22;
     background-color: #ffffff;
   }
-`;
-
-
-export const OutOfStockContainer = styled("div")`
-  font-family: "Raleway", sans-serif;
-  font-weight: 600;
-  font-size: 16px;
-
-  padding-top: 40px;
-  padding-bottom: 20px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 export const Description = styled("div")`

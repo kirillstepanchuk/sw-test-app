@@ -52,21 +52,21 @@ export class CartItem extends Component {
   };
 
   render() {
-    const { name, gallery, prices, brand } = this.props.product;
     const {
-      activeCurrency,
+      activeCurrency: { label, symbol },
       uniqueCartProducts,
       productIndex,
       cartProducts,
       addItem,
       removeItem,
+      product: { name, gallery, prices, brand },
     } = this.props;
+
     const { id, attributes, selectedAttributes } =
       uniqueCartProducts[productIndex];
 
     const price = getFixedPrice(
-      prices.filter((price) => price.currency.label === activeCurrency.label)[0]
-        .amount
+      prices.filter((price) => price.currency.label === label)[0].amount
     );
 
     return (
@@ -74,7 +74,7 @@ export class CartItem extends Component {
         <LeftContentContainer>
           <ItemBrand>{brand}</ItemBrand>
           <ItemName>{name}</ItemName>
-          <ItemPriceValue>{`${activeCurrency.symbol} ${price}`}</ItemPriceValue>
+          <ItemPriceValue>{`${symbol} ${price}`}</ItemPriceValue>
           <ProductAttributes
             attributes={uniqueCartProducts[productIndex].attributes}
             selectedAttributes={

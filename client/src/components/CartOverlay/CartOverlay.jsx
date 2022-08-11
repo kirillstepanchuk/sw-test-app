@@ -72,11 +72,15 @@ export class CartOverlay extends Component {
   };
 
   render() {
-    const { activeCurrency, cartProducts } = this.props;
+    const {
+      activeCurrency: { symbol, label },
+      cartProducts,
+    } = this.props;
+    const { isOpen } = this.state;
 
     const uniqueProducts = getUniqueElementsFromArray(cartProducts);
     const uniqueIds = uniqueProducts.map((product) => product.id);
-    const totalBill = getTotalPrice(cartProducts, activeCurrency);
+    const totalBill = getTotalPrice(cartProducts, label);
 
     return (
       <CardButtonContainer ref={this.wrapperRef}>
@@ -87,10 +91,10 @@ export class CartOverlay extends Component {
           )}
         </CartButton>
         <ModalBackground
-          show={this.state.isOpen}
+          show={isOpen}
           onClick={this.onBackgroundClick}
         ></ModalBackground>
-        <CartContent show={this.state.isOpen}>
+        <CartContent show={isOpen}>
           <CartTopInfo>
             <CartTopInfoTitle>My Bag</CartTopInfoTitle>, {cartProducts.length}{" "}
             items
@@ -107,10 +111,12 @@ export class CartOverlay extends Component {
                     if (loading) return <Loading />;
                     if (error) return <ErrorMessage />;
 
+                    const { product } = data;
+
                     return (
                       <CartOverlayItem
                         key={index}
-                        product={data.product}
+                        product={product}
                         uniqueCartProducts={uniqueProducts}
                         productIndex={index}
                       />
@@ -129,9 +135,7 @@ export class CartOverlay extends Component {
               <TotalPriceContainer>
                 <TotalPriceTitle>Total</TotalPriceTitle>
                 <TotalPriceValue>
-                  {cartProducts.length > 0
-                    ? `${activeCurrency.symbol} ${totalBill}`
-                    : 0}
+                  {cartProducts.length > 0 ? `${symbol} ${totalBill}` : 0}
                 </TotalPriceValue>
               </TotalPriceContainer>
               <CartButtonsContainer>

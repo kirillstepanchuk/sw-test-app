@@ -22,7 +22,7 @@ export class CartOverlayItem extends Component {
   render() {
     const { name, gallery, prices, brand } = this.props.product;
     const {
-      activeCurrency,
+      activeCurrency: { label, symbol },
       uniqueCartProducts,
       productIndex,
       cartProducts,
@@ -33,8 +33,7 @@ export class CartOverlayItem extends Component {
       uniqueCartProducts[productIndex];
 
     const price = getFixedPrice(
-      prices.filter((price) => price.currency.label === activeCurrency.label)[0]
-        .amount
+      prices.filter((price) => price.currency.label === label)[0].amount
     );
 
     return (
@@ -42,13 +41,11 @@ export class CartOverlayItem extends Component {
         <CardItemLeftContainer>
           <CartItemBrand>{brand}</CartItemBrand>
           <CartItemName>{name}</CartItemName>
-          <CartItemPrice>{`${activeCurrency.symbol} ${price}`}</CartItemPrice>
+          <CartItemPrice>{`${symbol} ${price}`}</CartItemPrice>
           <ProductAttributes
             type="overlayCart"
-            attributes={uniqueCartProducts[productIndex].attributes}
-            selectedAttributes={
-              uniqueCartProducts[productIndex].selectedAttributes
-            }
+            attributes={attributes}
+            selectedAttributes={selectedAttributes}
           />
         </CardItemLeftContainer>
 

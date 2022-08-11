@@ -56,12 +56,14 @@ class CurrencySwitcher extends Component {
 
   render() {
     const { isOpen } = this.state;
-    const { activeCurrency } = this.props;
+    const {
+      activeCurrency: { symbol },
+    } = this.props;
 
     return (
       <DropDownContainer ref={this.wrapperRef}>
         <DropDownButton onClick={this.onDropDownButtonClick}>
-          <CurrentSymbol>{activeCurrency.symbol}</CurrentSymbol>
+          <CurrentSymbol>{symbol}</CurrentSymbol>
           <DropDownArrowImage isSelectOpen={isOpen} src={ArrowImage} />
         </DropDownButton>
         {isOpen && (
@@ -71,7 +73,9 @@ class CurrencySwitcher extends Component {
                 if (loading) return <Loading />;
                 if (error) return <ErrorMessage />;
 
-                return data.currencies.map((option, index) => (
+                const { currencies } = data;
+
+                return currencies.map((option, index) => (
                   <ListItem onClick={this.onOptionClick(option)} key={index}>
                     {option.symbol} {option.label}
                   </ListItem>

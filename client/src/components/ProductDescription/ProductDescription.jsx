@@ -25,8 +25,7 @@ import {
   Price,
   SmallImage,
   PriceValue,
-  AddCartContainer,
-  OutOfStockContainer,
+  AddToCartButton,
   Description,
 } from "./style";
 
@@ -44,7 +43,11 @@ export class productDescription extends Component {
 
   render() {
     const { id } = this.props.match.params;
-    const { activeCurrency, selectedAttributes } = this.props;
+    const { currentImageId } = this.state;
+    const {
+      activeCurrency: { symbol, label },
+      selectedAttributes,
+    } = this.props;
 
     return (
       <MainContainer>
@@ -74,9 +77,7 @@ export class productDescription extends Component {
             });
 
             const price = getFixedPrice(
-              prices.filter(
-                (price) => price.currency.label === activeCurrency.label
-              )[0].amount
+              prices.filter((price) => price.currency.label === label)[0].amount
             );
 
             return (
@@ -92,7 +93,7 @@ export class productDescription extends Component {
                     ))}
                   </SmallImageContainer>
                   <CurrentImageContainer instock={inStock}>
-                    <CurrentImage src={gallery[this.state.currentImageId]} />
+                    <CurrentImage src={gallery[currentImageId]} />
                     {!inStock && (
                       <OutOfStockTitle>{OUT_OF_STOCK_MESSAGE}</OutOfStockTitle>
                     )}
@@ -107,9 +108,8 @@ export class productDescription extends Component {
                     initialAttributes={initialAttributes}
                   />
                   <Price>PRICE:</Price>
-                  <PriceValue>{`${activeCurrency.symbol} ${price}`}</PriceValue>
-                  {/* {inStock ? ( */}
-                  <AddCartContainer
+                  <PriceValue>{`${symbol} ${price}`}</PriceValue>
+                  <AddToCartButton
                     disabled={!inStock}
                     onClick={() =>
                       this.props.addToCart(
@@ -121,12 +121,7 @@ export class productDescription extends Component {
                     }
                   >
                     ADD TO CART
-                  </AddCartContainer>
-                  {/* // ) : (
-                  //   <OutOfStockContainer>
-                  //     Sorry, but this product out of stock for now =(
-                  //   </OutOfStockContainer>
-                  // )} */}
+                  </AddToCartButton>
                   <Description>{parse(description)}</Description>
                 </InfoContainer>
               </Container>

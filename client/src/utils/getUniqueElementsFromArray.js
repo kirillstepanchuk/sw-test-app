@@ -1,7 +1,7 @@
-const getUniqueElementsFromArray = (arr) => {
+const getUniqueElementsFromArray = (products) => {
   const uniqueElements = [];
 
-  const uniqueArray = arr.filter((element) => {
+  const uniqueArray = products.filter((element) => {
     const isDuplicate = uniqueElements.includes(JSON.stringify(element));
 
     if (!isDuplicate) {

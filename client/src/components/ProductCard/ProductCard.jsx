@@ -23,20 +23,24 @@ class ProductCard extends Component {
   render() {
     const { id, name, brand, gallery, prices, inStock, attributes } =
       this.props.product;
-    const { activeCurrency, addToCart } = this.props;
+    const {
+      activeCurrency: { label, symbol },
+      addToCart,
+    } = this.props;
 
     let initialAttributes = {};
     attributes.forEach((attribute) => {
       const { name, items } = attribute;
+      const { value } = items[0];
+
       initialAttributes = {
         ...initialAttributes,
-        [name]: items[0].value,
+        [name]: value,
       };
     });
 
     const price = getFixedPrice(
-      prices.filter((price) => price.currency.label === activeCurrency.label)[0]
-        .amount
+      prices.filter((price) => price.currency.label === label)[0].amount
     );
 
     return (
@@ -60,7 +64,7 @@ class ProductCard extends Component {
           {brand} {name}
         </CardTitle>
         <CardPrice>
-          {activeCurrency.symbol} {price}
+          {symbol} {price}
         </CardPrice>
       </CardContainer>
     );

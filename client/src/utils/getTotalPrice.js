@@ -1,10 +1,10 @@
 import getFixedPrice from "./getFixedPrice";
 
-const getTotalPrice = (uniqueProducts, activeCurrency) => {
+const getTotalPrice = (uniqueProducts, activeCurrencyLabel) => {
   return getFixedPrice(uniqueProducts
     .map((product) => {
       const price = product.prices.filter(
-        (price) => price.currency.label === activeCurrency.label
+        (price) => price.currency.label === activeCurrencyLabel
       );
       return price[0].amount;
     })

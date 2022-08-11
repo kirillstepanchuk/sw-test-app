@@ -5,6 +5,7 @@ import { Query } from "react-apollo";
 import Loading from "../Loading/Loading";
 import CartItem from "../CartItem/CartItem";
 import MainContainer from "../MainContainer/MainContainer";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import cartActions from "../../store/actions/cart";
 import getUniqueElementsFromArray from "../../utils/getUniqueElementsFromArray";
 import getTotalPrice from "../../utils/getTotalPrice";
@@ -25,20 +26,18 @@ import {
   EmptyCartMessage,
   EmptyCartButton,
 } from "./style";
-import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
 export class Cart extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
   render() {
-    const { cartProducts, activeCurrency, checkOut } = this.props;
+    const {
+      cartProducts,
+      activeCurrency: { symbol, label },
+      checkOut,
+    } = this.props;
 
     const uniqueProducts = getUniqueElementsFromArray(cartProducts);
     const uniqueIds = uniqueProducts.map((product) => product.id);
-    const totalBill = getTotalPrice(cartProducts, activeCurrency);
+    const totalBill = getTotalPrice(cartProducts, label);
 
     return (
       <MainContainer>
@@ -57,10 +56,13 @@ export class Cart extends Component {
                       if (loading) return <Loading />;
                       if (error) return <ErrorMessage />;
 
+                      const { product } = data;
+                      const { id } = product;
+
                       return (
-                        <CartItemContainer key={data.product.id}>
+                        <CartItemContainer key={id}>
                           <CartItem
-                            product={data.product}
+                            product={product}
                             uniqueCartProducts={uniqueProducts}
                             productIndex={index}
                           />
@@ -75,7 +77,7 @@ export class Cart extends Component {
                   <BottomCartLabel>Tax {TAX_PERCENT}%:</BottomCartLabel>
                   <BottomCartValue>
                     {cartProducts.length > 0
-                      ? ` ${activeCurrency.symbol}${getTaxFromPrice(totalBill)}`
+                      ? ` ${symbol}${getTaxFromPrice(totalBill)}`
                       : 0}
                   </BottomCartValue>
                 </BottomCartInfo>
@@ -86,9 +88,7 @@ export class Cart extends Component {
                 <BottomCartInfo>
                   <BottomCartLabel fontWeight="medium">Total:</BottomCartLabel>
                   <BottomCartValue>
-                    {cartProducts.length > 0
-                      ? ` ${activeCurrency.symbol}${totalBill}`
-                      : 0}
+                    {cartProducts.length > 0 ? ` ${symbol}${totalBill}` : 0}
                   </BottomCartValue>
                 </BottomCartInfo>
 
