@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import cardActions from "../../store/actions/cart";
 import { OUT_OF_STOCK_MESSAGE, ROUTE_PAGES } from "../../constants";
+import getFixedPrice from "../../utils/getFixedPrice";
 import CartImage from "../../images/white_cart.svg";
 import {
   CardContainer,
@@ -33,8 +34,9 @@ class ProductCard extends Component {
       };
     });
 
-    const price = prices.filter(
-      (price) => price.currency.label === activeCurrency.label
+    const price = getFixedPrice(
+      prices.filter((price) => price.currency.label === activeCurrency.label)[0]
+        .amount
     );
 
     return (
@@ -58,7 +60,7 @@ class ProductCard extends Component {
           {brand} {name}
         </CardTitle>
         <CardPrice>
-          {activeCurrency.symbol} {price[0].amount}
+          {activeCurrency.symbol} {price}
         </CardPrice>
       </CardContainer>
     );

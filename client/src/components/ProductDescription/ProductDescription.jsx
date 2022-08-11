@@ -9,6 +9,7 @@ import Loading from "../Loading/Loading";
 import ProductAttributes from "../ProductAttributes/ProductAttributes";
 import { GET_PRODUCT } from "../../apollo/queries/products";
 import cartActions from "../../store/actions/cart";
+import getFixedPrice from "../../utils/getFixedPrice";
 import {
   Container,
   ImageContainer,
@@ -71,8 +72,10 @@ export class productDescription extends Component {
               };
             });
 
-            const price = prices.filter(
-              (price) => price.currency.label === activeCurrency.label
+            const price = getFixedPrice(
+              prices.filter(
+                (price) => price.currency.label === activeCurrency.label
+              )[0].amount
             );
 
             return (
@@ -100,7 +103,7 @@ export class productDescription extends Component {
                     initialAttributes={initialAttributes}
                   />
                   <Price>PRICE:</Price>
-                  <PriceValue>{`${price[0].currency.symbol} ${price[0].amount}`}</PriceValue>
+                  <PriceValue>{`${activeCurrency.symbol} ${price}`}</PriceValue>
                   {inStock ? (
                     <AddCartContainer
                       onClick={() =>

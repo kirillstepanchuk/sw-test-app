@@ -1,7 +1,8 @@
 import { TAX_PERCENT } from "../constants";
+import getFixedPrice from "./getFixedPrice";
 
 const getTaxFromPrice = (total) => {
-  return ((TAX_PERCENT / 100) * total).toFixed(2)
+  return getFixedPrice(((TAX_PERCENT / 100) * total))
 }
 
 

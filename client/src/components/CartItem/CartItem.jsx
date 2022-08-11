@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import ProductAttributes from "../ProductAttributes/ProductAttributes";
 import cardActions from "../../store/actions/cart";
+import getFixedPrice from "../../utils/getFixedPrice";
 import getQuantityOfItemInArray from "../../utils/getQuantityOfItemInArray";
 import PlusIcon from "../../images/plus.svg";
 import MinusIcon from "../../images/minus.svg";
@@ -63,8 +64,9 @@ export class CartItem extends Component {
     const { id, attributes, selectedAttributes } =
       uniqueCartProducts[productIndex];
 
-    const price = prices.filter(
-      (price) => price.currency.label === activeCurrency.label
+    const price = getFixedPrice(
+      prices.filter((price) => price.currency.label === activeCurrency.label)[0]
+        .amount
     );
 
     return (
@@ -72,7 +74,7 @@ export class CartItem extends Component {
         <LeftContentContainer>
           <ItemBrand>{brand}</ItemBrand>
           <ItemName>{name}</ItemName>
-          <ItemPriceValue>{`${activeCurrency.symbol} ${price[0].amount}`}</ItemPriceValue>
+          <ItemPriceValue>{`${activeCurrency.symbol} ${price}`}</ItemPriceValue>
           <ProductAttributes
             attributes={uniqueCartProducts[productIndex].attributes}
             selectedAttributes={

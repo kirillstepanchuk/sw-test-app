@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import ProductAttributes from "../ProductAttributes/ProductAttributes";
 import cardActions from "../../store/actions/cart";
+import getFixedPrice from "../../utils/getFixedPrice";
 import getQuantityOfItemInArray from "../../utils/getQuantityOfItemInArray";
 import PlusIcon from "../../images/plus.svg";
 import MinusIcon from "../../images/minus.svg";
@@ -31,8 +32,9 @@ export class CartOverlayItem extends Component {
     const { id, attributes, selectedAttributes } =
       uniqueCartProducts[productIndex];
 
-    const price = prices.filter(
-      (price) => price.currency.label === activeCurrency.label
+    const price = getFixedPrice(
+      prices.filter((price) => price.currency.label === activeCurrency.label)[0]
+        .amount
     );
 
     return (
@@ -40,7 +42,7 @@ export class CartOverlayItem extends Component {
         <CardItemLeftContainer>
           <CartItemBrand>{brand}</CartItemBrand>
           <CartItemName>{name}</CartItemName>
-          <CartItemPrice>{`${activeCurrency.symbol} ${price[0].amount}`}</CartItemPrice>
+          <CartItemPrice>{`${activeCurrency.symbol} ${price}`}</CartItemPrice>
           <ProductAttributes
             type="overlayCart"
             attributes={uniqueCartProducts[productIndex].attributes}
