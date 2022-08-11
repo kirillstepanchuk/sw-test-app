@@ -36,6 +36,27 @@ export class CartOverlay extends Component {
     this.state = {
       isOpen: false,
     };
+
+    this.wrapperRef = React.createRef();
+    this.onOutsideClick = this.onOutsideClick.bind(this);
+  }
+
+  componentDidMount() {
+    document.addEventListener("mousedown", this.onOutsideClick);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.onOutsideClick);
+  }
+
+  onOutsideClick(event) {
+    if (
+      this.wrapperRef &&
+      !this.wrapperRef.current.contains(event.target) &&
+      this.state.isOpen
+    ) {
+      this.setState({ isOpen: false });
+    }
   }
 
   onBackgroundClick = () => {
@@ -44,7 +65,7 @@ export class CartOverlay extends Component {
     });
   };
 
-  onCartImageClick = async () => {
+  onCartImageClick = () => {
     this.setState((state) => ({
       isOpen: !state.isOpen,
     }));
@@ -58,7 +79,7 @@ export class CartOverlay extends Component {
     const totalBill = getTotalPrice(cartProducts, activeCurrency);
 
     return (
-      <CardButtonContainer>
+      <CardButtonContainer ref={this.wrapperRef}>
         <CartButton onClick={this.onCartImageClick}>
           <ImageContainer src={CartImage} />
           {cartProducts.length > 0 && (
