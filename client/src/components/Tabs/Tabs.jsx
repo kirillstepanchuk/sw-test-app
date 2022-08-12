@@ -1,11 +1,11 @@
 import React, { PureComponent } from "react";
 import { Query } from "react-apollo";
 
-import Loading from "../Loading/Loading";
+import Loading from "../Loading";
+import ErrorMessage from "../ErrorMessage";
 import { ROUTE_PAGES } from "../../constants";
 import { GET_CATEGORIES } from "../../apollo/queries/category";
 import { CategoryLink, TabsContainer } from "./style";
-import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
 class Tabs extends PureComponent {
   _isMounted = false;

@@ -1,5 +1,4 @@
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 
 import ProductDescription from "./ProductDescription";
 import cartActions from "../../store/actions/cart";
@@ -28,6 +27,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(ProductDescription)
-);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDescription);

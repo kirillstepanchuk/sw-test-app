@@ -10,7 +10,7 @@ import { Heading, ProductListContainer } from "./style";
 
 class ProductList extends PureComponent {
   render() {
-    const { category } = this.props.match.params;
+    const { category } = this.props;
 
     return (
       <MainContainer>

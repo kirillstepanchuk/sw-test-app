@@ -39,17 +39,21 @@ class ProductDescription extends PureComponent {
   };
 
   render() {
-    const { id } = this.props.match.params;
     const { currentImageId } = this.state;
     const {
       activeCurrency: { symbol, label },
       selectedAttributes,
       addToCart,
+      productId,
     } = this.props;
 
     return (
       <MainContainer>
-        <Query query={GET_PRODUCT} variables={{ id }}>
+        <Query
+          query={GET_PRODUCT}
+          variables={{ id: productId }}
+          fetchPolicy="no-cache"
+        >
           {({ data, loading, error }) => {
             if (loading) return <Loading />;
             if (error) return <ErrorMessage />;
