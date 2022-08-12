@@ -1,12 +1,10 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { PureComponent } from "react";
 import { Query } from "react-apollo";
 
-import Loading from "../Loading/Loading";
-import CartItem from "../CartItem/CartItem";
-import MainContainer from "../MainContainer/MainContainer";
-import ErrorMessage from "../ErrorMessage/ErrorMessage";
-import cartActions from "../../store/actions/cart";
+import Loading from "../Loading";
+import CartItem from "../CartItem";
+import MainContainer from "../MainContainer";
+import ErrorMessage from "../ErrorMessage";
 import getUniqueElementsFromArray from "../../utils/getUniqueElementsFromArray";
 import getTotalPrice from "../../utils/getTotalPrice";
 import getTaxFromPrice from "../../utils/getTaxFromPrice";
@@ -27,7 +25,7 @@ import {
   EmptyCartButton,
 } from "./style";
 
-export class Cart extends Component {
+class Cart extends PureComponent {
   render() {
     const {
       cartProducts,
@@ -111,20 +109,4 @@ export class Cart extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { activeCurrency } = state.currency;
-  const { cartProducts } = state.cart;
-
-  return {
-    cartProducts,
-    activeCurrency,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    checkOut: () => dispatch(cartActions.CheckOutProductsFromCart()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+export default Cart;

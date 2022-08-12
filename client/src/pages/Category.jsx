@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-import Header from "../components/Header/Header";
-import ProductList from "../components/ProductList/ProductList";
+import Header from "../components/Header";
+import ProductList from "../components/ProductList";
 
 export class CategoryPage extends Component {
   render() {

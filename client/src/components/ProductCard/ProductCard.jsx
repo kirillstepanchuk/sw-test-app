@@ -1,7 +1,5 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { PureComponent } from "react";
 
-import cardActions from "../../store/actions/cart";
 import { OUT_OF_STOCK_MESSAGE, ROUTE_PAGES } from "../../constants";
 import getFixedPrice from "../../utils/getFixedPrice";
 import CartImage from "../../images/white_cart.svg";
@@ -14,7 +12,7 @@ import {
   AddToCartButton,
 } from "./style";
 
-class ProductCard extends Component {
+class ProductCard extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {};
@@ -71,26 +69,4 @@ class ProductCard extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { activeCurrency } = state.currency;
-
-  return {
-    activeCurrency,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addToCart: (productId, attributes, selectedAttributes, prices) =>
-      dispatch(
-        cardActions.AddProductToCart(
-          productId,
-          attributes,
-          selectedAttributes,
-          prices
-        )
-      ),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProductCard);
+export default ProductCard;

@@ -1,9 +1,8 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { PureComponent } from "react";
 import { Query } from "react-apollo";
 
-import Loading from "../Loading/Loading";
-import currencyActions from "../../store/actions/currency";
+import Loading from "../Loading";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import { GET_CURRENCIES } from "../../apollo/queries/currency";
 import ArrowImage from "../../images/switcher_arrow.svg";
 import {
@@ -14,9 +13,8 @@ import {
   DropDownList,
   ListItem,
 } from "./style";
-import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
-class CurrencySwitcher extends Component {
+class CurrencySwitcher extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -36,11 +34,10 @@ class CurrencySwitcher extends Component {
   }
 
   onOutsideClick(event) {
-    if (
-      this.wrapperRef &&
-      !this.wrapperRef.current.contains(event.target) &&
-      this.state.isOpen
-    ) {
+    const { wrapperRef } = this;
+    const { isOpen } = this.state;
+
+    if (wrapperRef && !wrapperRef.current.contains(event.target) && isOpen) {
       this.setState({ isOpen: false });
     }
   }
@@ -48,10 +45,13 @@ class CurrencySwitcher extends Component {
   onDropDownButtonClick = () => this.setState({ isOpen: !this.state.isOpen });
 
   onOptionClick = (currency) => () => {
+    const { currencySwitch } = this.props;
+
     this.setState({
       isOpen: false,
     });
-    this.props.currencySwitch(currency);
+
+    currencySwitch(currency);
   };
 
   render() {
@@ -89,19 +89,4 @@ class CurrencySwitcher extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { activeCurrency } = state.currency;
-
-  return {
-    activeCurrency,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    currencySwitch: (currency) =>
-      dispatch(currencyActions.CurrencySwitch(currency)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CurrencySwitcher);
+export default CurrencySwitcher;

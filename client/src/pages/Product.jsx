@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-import Header from "../components/Header/Header";
-import ProductDescription from "../components/ProductDescription/ProductDescription";
+import Header from "../components/Header";
+import ProductDescription from "../components/ProductDescription";
 
 export class ProductPage extends Component {
   render() {

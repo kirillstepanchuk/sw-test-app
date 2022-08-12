@@ -1,6 +1,5 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Query } from "react-apollo";
-import { withRouter } from "react-router-dom";
 
 import Loading from "../Loading/Loading";
 import { ROUTE_PAGES } from "../../constants";
@@ -8,7 +7,7 @@ import { GET_CATEGORIES } from "../../apollo/queries/category";
 import { CategoryLink, TabsContainer } from "./style";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
-class Tabs extends Component {
+class Tabs extends PureComponent {
   _isMounted = false;
 
   constructor(props) {
@@ -61,4 +60,4 @@ class Tabs extends Component {
   }
 }
 
-export default withRouter(Tabs);
+export default Tabs;

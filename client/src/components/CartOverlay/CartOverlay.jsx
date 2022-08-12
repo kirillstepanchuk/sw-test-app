@@ -1,15 +1,14 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { PureComponent } from "react";
 import { Query } from "react-apollo";
 
-import Loading from "../Loading/Loading";
-import CartImage from "../../images/cart.svg";
-import CartOverlayItem from "../CartOverlayItem/CartOverlayItem";
-import cartActions from "../../store/actions/cart";
+import CartOverlayItem from "../CartOverlayItem";
+import Loading from "../Loading";
+import ErrorMessage from "../ErrorMessage";
 import getUniqueElementsFromArray from "../../utils/getUniqueElementsFromArray";
 import getTotalPrice from "../../utils/getTotalPrice";
 import { ROUTE_PAGES } from "../../constants";
 import { GET_PRODUCT } from "../../apollo/queries/products";
+import CartImage from "../../images/cart.svg";
 import {
   CardButtonContainer,
   ImageContainer,
@@ -28,9 +27,8 @@ import {
   CheckOutButton,
   EmptyCartOverlayContainer,
 } from "./style";
-import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
-export class CartOverlay extends Component {
+class CartOverlay extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -50,11 +48,10 @@ export class CartOverlay extends Component {
   }
 
   onOutsideClick(event) {
-    if (
-      this.wrapperRef &&
-      !this.wrapperRef.current.contains(event.target) &&
-      this.state.isOpen
-    ) {
+    const { wrapperRef } = this;
+    const { isOpen } = this.state;
+
+    if (wrapperRef && !wrapperRef.current.contains(event.target) && isOpen) {
       this.setState({ isOpen: false });
     }
   }
@@ -72,9 +69,11 @@ export class CartOverlay extends Component {
   };
 
   render() {
+    const { onBackgroundClick } = this;
     const {
       activeCurrency: { symbol, label },
       cartProducts,
+      checkOut,
     } = this.props;
     const { isOpen } = this.state;
 
@@ -92,7 +91,7 @@ export class CartOverlay extends Component {
         </CartButton>
         <ModalBackground
           show={isOpen}
-          onClick={this.onBackgroundClick}
+          onClick={onBackgroundClick}
         ></ModalBackground>
         <CartContent show={isOpen}>
           <CartTopInfo>
@@ -140,9 +139,7 @@ export class CartOverlay extends Component {
               </TotalPriceContainer>
               <CartButtonsContainer>
                 <ViewBagButton to={ROUTE_PAGES.cart}>VIEW BAG</ViewBagButton>
-                <CheckOutButton onClick={this.props.checkOut}>
-                  CHECK OUT
-                </CheckOutButton>
+                <CheckOutButton onClick={checkOut}>CHECK OUT</CheckOutButton>
               </CartButtonsContainer>
             </>
           )}
@@ -152,20 +149,4 @@ export class CartOverlay extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { activeCurrency } = state.currency;
-  const { cartProducts } = state.cart;
-
-  return {
-    activeCurrency,
-    cartProducts,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    checkOut: () => dispatch(cartActions.CheckOutProductsFromCart()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CartOverlay);
+export default CartOverlay;

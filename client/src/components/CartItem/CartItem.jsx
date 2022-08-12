@@ -1,8 +1,6 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { PureComponent } from "react";
 
-import ProductAttributes from "../ProductAttributes/ProductAttributes";
-import cardActions from "../../store/actions/cart";
+import ProductAttributes from "../ProductAttributes";
 import getFixedPrice from "../../utils/getFixedPrice";
 import getQuantityOfItemInArray from "../../utils/getQuantityOfItemInArray";
 import PlusIcon from "../../images/plus.svg";
@@ -24,7 +22,7 @@ import {
   ItemImage,
 } from "./style";
 
-export class CartItem extends Component {
+class CartItem extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -130,32 +128,4 @@ export class CartItem extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { activeCurrency } = state.currency;
-  const { cartProducts } = state.cart;
-
-  return {
-    activeCurrency,
-    cartProducts,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addItem: (id, attributes, selectedAttributes, prices) =>
-      dispatch(
-        cardActions.AddProductToCart(id, attributes, selectedAttributes, prices)
-      ),
-    removeItem: (id, attributes, selectedAttributes, prices) =>
-      dispatch(
-        cardActions.RemoveProductFromCart(
-          id,
-          attributes,
-          selectedAttributes,
-          prices
-        )
-      ),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(CartItem);
+export default CartItem;

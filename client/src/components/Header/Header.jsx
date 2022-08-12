@@ -1,13 +1,13 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 
-import Tabs from "../Tabs/Tabs";
-import MainContainer from "../MainContainer/MainContainer";
-import CurrencySwitcher from "../CurrencySwitcher/CurrencySwitcher";
-import CartOverlay from "../CartOverlay/CartOverlay";
+import Tabs from "../Tabs";
+import MainContainer from "../MainContainer";
+import CurrencySwitcher from "../CurrencySwitcher";
+import CartOverlay from "../CartOverlay";
 import Logo from "../../images/app_logo.png";
 import { HeaderContainer, RightItems } from "./style";
 
-export class Header extends Component {
+class Header extends PureComponent {
   render() {
     return (
       <MainContainer>

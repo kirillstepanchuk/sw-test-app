@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 
 import { Container } from "./style";
 
-class MainContainer extends Component {
+class MainContainer extends PureComponent {
   render() {
     const { children } = this.props;
 

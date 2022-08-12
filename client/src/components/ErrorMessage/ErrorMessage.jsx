@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 
 import { ErrorContainer } from "./style";
 
-export class ErrorMessage extends Component {
+class ErrorMessage extends PureComponent {
   render() {
     return (
       <ErrorContainer>

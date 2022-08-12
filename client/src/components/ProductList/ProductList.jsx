@@ -1,15 +1,14 @@
-import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import React, { PureComponent } from "react";
 import { Query } from "react-apollo";
 
-import ProductCard from "../ProductCard/ProductCard";
-import MainContainer from "../MainContainer/MainContainer";
-import Loading from "../Loading/Loading";
+import ProductCard from "../ProductCard";
+import MainContainer from "../MainContainer";
+import Loading from "../Loading";
+import ErrorMessage from "../ErrorMessage";
 import { GET_PRODUCTS } from "../../apollo/queries/products";
 import { Heading, ProductListContainer } from "./style";
-import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
-class ProductList extends Component {
+class ProductList extends PureComponent {
   render() {
     const { category } = this.props.match.params;
 
@@ -37,4 +36,4 @@ class ProductList extends Component {
   }
 }
 
-export default withRouter(ProductList);
+export default ProductList;

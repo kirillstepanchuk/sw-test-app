@@ -1,7 +1,5 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { PureComponent } from "react";
 
-import attributesActions from "../../store/actions/attributes";
 import {
   AttributesContainer,
   Attributes,
@@ -12,7 +10,7 @@ import {
   AttributeValue,
 } from "./style";
 
-class ProductAttributes extends Component {
+class ProductAttributes extends PureComponent {
   constructor(props) {
     super(props);
     this.state = { ...this.props.initialAttributes };
@@ -87,11 +85,4 @@ class ProductAttributes extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setProductAttributes: (selectedAttributes) =>
-      dispatch(attributesActions.setProductAttributes(selectedAttributes)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(ProductAttributes);
+export default ProductAttributes;

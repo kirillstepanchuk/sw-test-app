@@ -1,15 +1,12 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Query } from "react-apollo";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 import parse from "html-react-parser";
 
-import MainContainer from "../MainContainer/MainContainer";
-import Loading from "../Loading/Loading";
-import ErrorMessage from "../ErrorMessage/ErrorMessage";
-import ProductAttributes from "../ProductAttributes/ProductAttributes";
+import ProductAttributes from "../ProductAttributes";
+import MainContainer from "../MainContainer";
+import Loading from "../Loading";
+import ErrorMessage from "../ErrorMessage";
 import { GET_PRODUCT } from "../../apollo/queries/products";
-import cartActions from "../../store/actions/cart";
 import getFixedPrice from "../../utils/getFixedPrice";
 import { OUT_OF_STOCK_MESSAGE } from "../../constants";
 import {
@@ -29,7 +26,7 @@ import {
   Description,
 } from "./style";
 
-export class productDescription extends Component {
+class ProductDescription extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -47,6 +44,7 @@ export class productDescription extends Component {
     const {
       activeCurrency: { symbol, label },
       selectedAttributes,
+      addToCart,
     } = this.props;
 
     return (
@@ -112,12 +110,7 @@ export class productDescription extends Component {
                   <AddToCartButton
                     disabled={!inStock}
                     onClick={() =>
-                      this.props.addToCart(
-                        id,
-                        attributes,
-                        selectedAttributes,
-                        prices
-                      )
+                      addToCart(id, attributes, selectedAttributes, prices)
                     }
                   >
                     ADD TO CART
@@ -133,30 +126,4 @@ export class productDescription extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  const { activeCurrency } = state.currency;
-  const { selectedAttributes } = state.attributes;
-
-  return {
-    activeCurrency: activeCurrency,
-    selectedAttributes: selectedAttributes,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addToCart: (productId, attributes, selectedAttributes, prices) =>
-      dispatch(
-        cartActions.AddProductToCart(
-          productId,
-          attributes,
-          selectedAttributes,
-          prices
-        )
-      ),
-  };
-};
-
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(productDescription)
-);
+export default ProductDescription;
