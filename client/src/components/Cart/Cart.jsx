@@ -49,6 +49,7 @@ class Cart extends PureComponent {
                     key={index}
                     query={GET_PRODUCT}
                     variables={{ id: productId }}
+                    fetchPolicy="no-cache"
                   >
                     {({ data, loading, error }) => {
                       if (loading) return <Loading />;
